@@ -1,0 +1,41 @@
+# ------------------------------------------------------------------------------
+#
+# Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# WSO2 Inc. licenses this file to you under the Apache License,
+# Version 2.0 (the "License"); you may not use this file except
+# in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+# ------------------------------------------------------------------------------
+-----BEGIN CERTIFICATE-----
+MIIDkjCCAnoCCQCr7BNXo/qPtjANBgkqhkiG9w0BAQUFADCBijELMAkGA1UEBhMC
+U0wxEDAOBgNVBAgTB1dlc3Rlcm4xEDAOBgNVBAcTB0NvbG9tYm8xDTALBgNVBAoT
+BFdTTzIxDjAMBgNVBAsTBVBQYWFTMRQwEgYDVQQDEwtNYXJhdGhvbi1sYjEiMCAG
+CSqGSIb3DQEJARYTYW51cnVkZGhhbEB3c28yLmNvbTAeFw0xNjA3MTgwNTU3MTJa
+Fw0xNzA3MTgwNTU3MTJaMIGKMQswCQYDVQQGEwJTTDEQMA4GA1UECBMHV2VzdGVy
+bjEQMA4GA1UEBxMHQ29sb21ibzENMAsGA1UEChMEV1NPMjEOMAwGA1UECxMFUFBh
+YVMxFDASBgNVBAMTC01hcmF0aG9uLWxiMSIwIAYJKoZIhvcNAQkBFhNhbnVydWRk
+aGFsQHdzbzIuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqhLA
+eMDCPx5dQDL+aUX0mr5VQd+Gndu2fO9fwpTfjeZUMY74k86vCgTNZ2Wb3gTOtPRt
+xxt1XrQX4wt30hu0d88yhqn7SV0fSRoWk+8gbA1fW8LTH+82KGKIyGdNzntbsYJQ
+2Sh9RmPBY1xldNz9WW37vQklJFmzKP6uc7hT4nSQwwsTjIDoOhZS2P0wtWVAKrN+
+8EMmHNAK+CzHWVo7qsMk4y6xqkdS05lAoQ3j6hDyVcfGdHYAz9B/VW3vW8QRVKSb
+FG9AMclsbiQfyN4CvHNpxcVzLURe1qVSMRSjly8ry8uPsm4Sq3TNZEokj8Bh8tB1
+Ep/+o3gmrpGc9auQwQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQBoW0XAwdhQlW2P
+MU98I10yJHmgGbRJhOCn5C+I8lqG0m/0ZogVfy15YeTowLjaaWNS4C9MnUGmwMiU
+NdKPFnlQgEedyazYqBt+MDjS55GEZFWP6u+Nh1bnJr9c8+VuQH6k2DQ/FsHhiFJu
+Q5temmevOsUuEKJd9k9gmoumBxVh0IDAd2DMEYhypXWZzgKid0sUDyXL5uVg1jdk
+yXcIyDnDa7mekQ5ZkB05RcNFrqGFU44xXzxvBlL9msU20NvkK8V7a/7bQwt03QYP
+/EZcx4GYyOmbFBifXPxF/sQLX1qrD7ZL21033lPfyCnEfBsw5oN9zH7VoVoqWkC0
+NQMBO6oG
+-----END CERTIFICATE-----
