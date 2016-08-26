@@ -15,13 +15,15 @@
 #----------------------------------------------------------------------------
 #
 # Manages system configuration
-class wso2base::system (
+define wso2base::system (
   $packages,
   $wso2_group,
   $wso2_user,
   $service_name,
   $service_template,
-  $hosts_mapping
+  $hosts_mapping,
+  $prefs_system_root,
+  $prefs_user_root
 ) {
   # Install system packages
   package { $packages: ensure => installed }
@@ -58,7 +60,11 @@ class wso2base::system (
     }
   }
 
-  if $::vm_type != 'docker' {
-    create_resources(host, $hosts_mapping)
-  }
+  # Set Java system preferences directory
+  ensure_resource('file', [$prefs_system_root, $prefs_user_root], {
+    ensure  => 'directory',
+    owner => $wso2_user,
+    group => $wso2_group,
+    mode => 755
+  })
 }

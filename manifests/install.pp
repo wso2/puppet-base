@@ -16,7 +16,7 @@
 
 # Downloads the pack, extract and set user permissions
 define wso2base::install ($mode, $install_dir, $pack_filename, $pack_dir, $user, $group, $product_name) {
-  $carbon_home = $name
+  $carbon_home        = "${install_dir}/${::product_name}-${::product_version}"
   $pack_file_abs_path = "${pack_dir}/${pack_filename}"
 
   # create directories for installation if they do not exist

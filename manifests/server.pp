@@ -28,7 +28,6 @@ define wso2base::server (
   $patches_dir,
   $service_name,
   $service_template,
-  $hosts_template,
   $template_list,
   $directory_list,
   $file_list,

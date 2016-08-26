@@ -16,14 +16,10 @@
 #
 # Class to manage Java installation
 class wso2base::java (
-  $java_install_dir,
-  $java_source_file,
-  $wso2_user,
-  $wso2_group,
-  $java_home,
-  $prefs_system_root,
-  $prefs_user_root
-) {
+  $java_install_dir     = $wso2base::params::java_install_dir,
+  $java_source_file     = $wso2base::params::java_source_file,
+  $java_home            = $wso2base::params::java_home,
+) inherits wso2base::params {
 
   ensure_resource('file', $java_install_dir, {
     ensure  => 'directory',
@@ -32,7 +28,7 @@ class wso2base::java (
   # Module 7terminals-java is used to install Java at Puppet Forge
   # Puppet Forge URL: https://forge.puppetlabs.com/7terminals/java
 
-  $cachedir = "/home/${wso2_user}/java-setup-${name}"
+  $cachedir = "/opt/java-setup-${name}"
 
   java::setup { $java_source_file :
     ensure        => 'present',
@@ -63,12 +59,4 @@ class wso2base::java (
     require => File['/etc/profile.d/set_java_home.sh'],
   }
 
-  # Set Java system preferences directory
-  ensure_resource('file', [$prefs_system_root, $prefs_user_root], {
-    ensure  => 'directory',
-    owner => $wso2_user,
-    group => $wso2_group,
-    mode => 755,
-    require => File['/etc/profile.d/set_java_home.sh']
-  })
 }

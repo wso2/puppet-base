@@ -40,10 +40,13 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>${project.basedir}/files/</directory>
+            <directory>${project.basedir}/files</directory>
             <outputDirectory>${pom.artifactId}-${pom.version}/files/</outputDirectory>
             <includes>
-                <include>**/*</include>
+                <include>files/**</include>
+                <include>manifests/**</include>
+                <include>templates/**</include>
+                <include>metadata.json</include>
             </includes>
             <excludes>
                 <exclude>**/*.zip</exclude>
@@ -53,6 +56,17 @@
             </excludes>
         </fileSet>
 
+<!--
+        <fileSet>
+            <directory>${project.basedir}/../../hieradata</directory>
+            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+            <excludes>
+                <exclude>**/wso2/**</exclude>
+            </excludes>
+        </fileSet> -->
     </fileSets>
 
     <files>
@@ -60,14 +74,27 @@
             <source>metadata.json</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
         </file>
+<!--
         <file>
-            <source>${project.basedir}/LICENSE</source>
+            <source>${project.basedir}/../../hiera.yaml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.basedir}/../../hieradata/dev/wso2/common.yaml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/dev/wso2/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.basedir}/../../hieradata/dev/common.yaml</source>
+            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/dev/</outputDirectory>
+        </file> -->
+        <file>
+            <source>LICENSE</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
-            <source>${project.basedir}/README.md</source>
+            <source>README.md</source>
             <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
