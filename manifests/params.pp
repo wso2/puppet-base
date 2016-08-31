@@ -26,6 +26,7 @@ class wso2base::params() {
 
     # system configuration data
     $packages             = hiera_array('packages')
+    $template_list        = hiera_array('wso2::template_list')
     $file_list            = hiera_array('wso2::file_list')
     $system_file_list     = hiera_array('wso2::system_file_list')
     $directory_list       = hiera_array('wso2::directory_list', [])
@@ -79,6 +80,16 @@ class wso2base::params() {
     $packages               = [
       'zip',
       'unzip'
+    ]
+    $template_list          = [
+      'repository/conf/carbon.xml',
+      'repository/conf/user-mgt.xml',
+      'repository/conf/registry.xml',
+      'repository/conf/datasources/master-datasources.xml',
+      'repository/conf/tomcat/catalina-server.xml',
+      'repository/conf/axis2/axis2.xml',
+      'repository/conf/security/authenticators.xml',
+      'bin/wso2server.sh'
     ]
     $file_list              = []
     $system_file_list       = []
@@ -194,6 +205,10 @@ class wso2base::params() {
         key_password => 'wso2carbon'
       }
     }
+    $post_install_resources             = undef
+    $post_configure_resources           = undef
+    $post_start_resources               = undef
+
   }
 
 }
