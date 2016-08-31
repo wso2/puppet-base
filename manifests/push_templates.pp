@@ -20,6 +20,6 @@ define wso2base::push_templates ($carbon_home, $owner, $group, $wso2_module) {
     owner   => $owner,
     group   => $group,
     mode    => '0754',
-    content => template("${wso2_module}/${::product_version}/${name}.erb")
+    content => template("${wso2_module}/${name}.erb")
   })
 }
