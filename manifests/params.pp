@@ -66,7 +66,6 @@ class wso2base::params() {
     $post_configure_resources = hiera('wso2::post_configure_resources', { } )
     $post_start_resources     = hiera('wso2::post_start_resources', { } )
 
-
   }else
   {
 

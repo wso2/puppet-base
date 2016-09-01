@@ -66,17 +66,6 @@ define wso2base::configure_and_deploy (
     require             => [Wso2base::Configure[$carbon_home], Wso2base::Patch[$carbon_home]]
   }
 
-  # Import marathon-lb ceritficate
-  if ($::platform == 'mesos' and $marathon_lb_cert_config_enabled == true) {
-    wso2base::import_cert{ $carbon_home:
-      carbon_home          => $carbon_home,
-      wso2_module          => $module_name,
-      java_home            => $java_home,
-      cert_file            => $cert_file,
-      trust_store_password => $trust_store_password,
-      require              => Wso2base::Configure[$carbon_home]
-    }
-  }
 
   # Deploy product artifacts
   wso2base::deploy { $carbon_home:
