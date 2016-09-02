@@ -14,14 +14,18 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
-define wso2base::patch ($patches_abs_dir, $patches_dir, $user, $group, $product_name, $product_version) {
-  file { $patches_abs_dir:
-    ensure  => present,
-    owner   => $user,
-    group   => $group,
-    mode    => '0754',
-    ignore  => '.svn',
-    recurse => 'remote',
-    source  => ["puppet:///modules/${product_name}/patches/${patches_dir}"]
+define wso2base::patch ($carbon_home, $patches_dir, $platform_version, $user, $group, $wso2_module) {
+
+  if ($name != undef and size($name) > 0) {
+    ensure_resource('file', "${carbon_home}/${patches_dir}/${name}", {
+      ensure  => present,
+      owner   => $owner,
+      group   => $group,
+      recurse => remote,
+      ignore  => '.svn',
+      mode    => '0754',
+      source  => ["puppet:///modules/${wso2_module}/patches/${platform_version}/${name}","puppet:///modules/wso2base/patches/${platform_version}/${name}"]
+    })
   }
 }
+

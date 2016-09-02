@@ -81,4 +81,6 @@ define wso2base::configure ($template_list, $directory_list, $file_list, $system
         require     => Wso2base::Ensure_directory_structures[$directory_list]
     }
   }
+
+
 }

@@ -17,6 +17,8 @@
 define wso2base::configure_and_deploy (
   $install_dir,
   $patches_dir,
+  $patch_list,
+  $platform_version,
   $wso2_user,
   $wso2_group,
   $template_list,
@@ -36,15 +38,18 @@ define wso2base::configure_and_deploy (
   notice("Configuring and Deploying WSO2 product [name] ${::product_name}, [version] ${::product_version}, [CARBON_HOME] ${carbon_home}")
 
   # Copy any patches to patch directory
-  wso2base::patch { $carbon_home:
-    patches_abs_dir => $patches_abs_dir,
-    patches_dir     => $patches_dir,
-    user            => $wso2_user,
-    group           => $wso2_group,
-    product_name    => $::product_name,
-    product_version => $::product_version,
-    require         => Wso2base::Install[$carbon_home]
+
+  wso2base::patch {
+    $patch_list:
+      carbon_home      => $carbon_home,
+      patches_dir      => $patches_dir,
+      platform_version => $platform_version,
+      user             => $wso2_user,
+      group            => $wso2_group,
+      wso2_module      => $module_name,
+      require          => Wso2base::Install[$carbon_home]
   }
+
 
   # Populate templates and copy files provided
   wso2base::configure { $carbon_home:
@@ -63,7 +68,7 @@ define wso2base::configure_and_deploy (
     user                => $wso2_user,
     enable_secure_vault => $enable_secure_vault,
     key_store_password  => $key_store_password,
-    require             => [Wso2base::Configure[$carbon_home], Wso2base::Patch[$carbon_home]]
+    require             => [Wso2base::Configure[$carbon_home], Wso2base::Patch[$patch_list]]
   }
 
 

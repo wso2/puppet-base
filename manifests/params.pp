@@ -207,6 +207,7 @@ class wso2base::params() {
     $post_install_resources             = undef
     $post_configure_resources           = undef
     $post_start_resources               = undef
+    $patch_list  = []
 
   }
 
