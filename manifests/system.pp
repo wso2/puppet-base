@@ -15,25 +15,21 @@
 #----------------------------------------------------------------------------
 #
 # Manages system configuration
-define wso2base::system (
-  $packages,
-  $wso2_group,
-  $wso2_user,
-  $service_name,
-  $service_template,
-  $hosts_mapping,
-  $prefs_system_root,
-  $prefs_user_root
-) {
-  # Install system packages
-  package { $packages: ensure => installed }
+class wso2base::system {
 
-  if $::vm_type != 'docker' {
-    cron { 'ntpdate':
-      command => '/usr/sbin/ntpdate pool.ntp.org',
-      user    => 'root',
-      minute  => '*/50'
-    }
+  $packages               = $wso2base::packages
+  $wso2_group             = $wso2base::wso2_group
+  $wso2_user              = $wso2base::wso2_user
+  $vm_type                = $wso2base::vm_type
+  $service_name           = $wso2base::service_name
+  $service_template       = $wso2base::service_template
+  $hosts_mapping          = $wso2base::hosts_mapping
+  $java_prefs_system_root = $wso2base::java_prefs_system_root
+  $java_prefs_user_root   = $wso2base::java_prefs_user_root
+
+  # Install system packages
+  package { $packages:
+    ensure => installed
   }
 
   group { $wso2_group:
@@ -50,21 +46,31 @@ define wso2base::system (
     require    => Group[$wso2_group]
   }
 
-  if $::vm_type != 'docker' {
+  if $vm_type != 'docker' {
+    cron { 'ntpdate':
+      command => '/usr/sbin/ntpdate pool.ntp.org',
+      user    => 'root',
+      minute  => '*/50'
+    }
+
+    create_resources(host, $hosts_mapping)
+
     file { "/etc/init.d/${service_name}":
       ensure  => present,
       owner   => $wso2_user,
       group   => $wso2_group,
       mode    => '0755',
       content => template($service_template),
+      require => [Group[$wso2_group], User[$wso2_user]]
     }
   }
 
   # Set Java system preferences directory
-  ensure_resource('file', [$prefs_system_root, $prefs_user_root], {
+  file{ [$java_prefs_system_root, $java_prefs_user_root]:
     ensure  => 'directory',
-    owner => $wso2_user,
-    group => $wso2_group,
-    mode => 755
-  })
+    owner   => $wso2_user,
+    group   => $wso2_group,
+    mode    => '0755',
+    require => [Group[$wso2_group], User[$wso2_user]]
+  }
 }

@@ -23,6 +23,6 @@ define wso2base::configure_sso ($carbon_home, $owner, $group, $wso2_module) {
     owner   => $owner,
     group   => $group,
     mode    => '0754',
-    content => template("${wso2_module}/${::product_version}/${template_path}/service_provider_template.xml.erb")
+    content => template("${wso2_module}/${template_path}/service_provider_template.xml.erb")
   })
 }

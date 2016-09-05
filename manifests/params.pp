@@ -14,73 +14,78 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
-class wso2base::params() {
+class wso2base::params {
 
-  if($::use_hieradata == 'true')
-  {
+  # Set facter variables
+  $product_name               = $::product_name
+  $product_version            = $::product_version
+  $vm_type                    = $::vm_type
+  $ipaddress                  = $::ipaddress
+  $fqdn                       = $::fqdn
 
-    $java_class             = hiera('java_class')
-    $java_prefs_system_root = hiera('java_prefs_system_root')
-    $java_prefs_user_root   = hiera('java_prefs_user_root')
-    $java_home              = hiera('java_home')
+  # use_hieradata facter flags whether parameter lookup should be done via Hiera
+  if ($::use_hieradata == true) {
+    $java_class               = hiera('java_class')
+    $java_prefs_system_root   = hiera('java_prefs_system_root')
+    $java_prefs_user_root     = hiera('java_prefs_user_root')
+    $java_home                = hiera('java_home')
 
     # system configuration data
-    $packages             = hiera_array('packages')
-    $template_list        = hiera_array('wso2::template_list')
-    $file_list            = hiera_array('wso2::file_list')
-    $system_file_list     = hiera_array('wso2::system_file_list')
-    $directory_list       = hiera_array('wso2::directory_list', [])
-    $hosts_mapping        = hiera_hash('wso2::hosts_mapping')
+    $packages                 = hiera_array('packages')
+    $patch_list               = hiera('wso2::patch_list', { } )
+    $template_list            = hiera_array('wso2::template_list')
+    $file_list                = hiera_array('wso2::file_list')
+    $system_file_list         = hiera_array('wso2::system_file_list')
+    $directory_list           = hiera_array('wso2::directory_list', [])
+    $cert_list                = hiera_array('wso2::cert_list', [])
+    $hosts_mapping            = hiera_hash('wso2::hosts_mapping')
 
-    $master_datasources   = hiera_hash('wso2::master_datasources')
-    $registry_mounts      = hiera_hash('wso2::registry_mounts', { })
-    $carbon_home_symlink  = hiera('wso2::carbon_home_symlink')
-    $wso2_user            = hiera('wso2::user')
-    $wso2_group           = hiera('wso2::group')
-    $maintenance_mode     = hiera('wso2::maintenance_mode')
-    $install_mode         = hiera('wso2::install_mode')
-    $install_dir          = hiera('wso2::install_dir')
-    $pack_dir             = hiera('wso2::pack_dir')
-    $pack_filename        = hiera('wso2::pack_filename')
-    $pack_extracted_dir   = hiera('wso2::pack_extracted_dir')
-    $hostname             = hiera('wso2::hostname')
-    $mgt_hostname         = hiera('wso2::mgt_hostname')
-    $worker_node          = hiera('wso2::worker_node')
-    $patches_dir          = hiera('wso2::patches_dir')
-    $service_name         = hiera('wso2::service_name')
-    $service_template     = hiera('wso2::service_template')
-    $usermgt_datasource   = hiera('wso2::usermgt_datasource')
-    $local_reg_datasource = hiera('wso2::local_reg_datasource')
-    $clustering           = hiera('wso2::clustering')
-    $dep_sync             = hiera('wso2::dep_sync')
-    $ports                = hiera('wso2::ports')
-    $jvm                  = hiera('wso2::jvm')
-    $ipaddress            = hiera('wso2::ipaddress')
-    $fqdn                 = hiera('wso2::fqdn')
-    $sso_authentication   = hiera('wso2::sso_authentication')
-    $user_management      = hiera('wso2::user_management')
-    $enable_secure_vault  = hiera('wso2::enable_secure_vault')
-    $secure_vault_configs = hiera('wso2::secure_vault_configs', { })
-    $key_stores           = hiera('wso2::key_stores')
+    $master_datasources       = hiera_hash('wso2::master_datasources')
+    $registry_mounts          = hiera_hash('wso2::registry_mounts', { })
+    $carbon_home_symlink      = hiera('wso2::carbon_home_symlink')
+    $wso2_user                = hiera('wso2::user')
+    $wso2_group               = hiera('wso2::group')
+    $maintenance_mode         = hiera('wso2::maintenance_mode')
+    $install_mode             = hiera('wso2::install_mode')
+    $install_dir              = hiera('wso2::install_dir')
+    $pack_dir                 = hiera('wso2::pack_dir')
+    $pack_filename            = hiera('wso2::pack_filename')
+    $pack_extracted_dir       = hiera('wso2::pack_extracted_dir')
+    $hostname                 = hiera('wso2::hostname')
+    $mgt_hostname             = hiera('wso2::mgt_hostname')
+    $worker_node              = hiera('wso2::worker_node')
+    $patches_dir              = hiera('wso2::patches_dir')
+    $service_name             = hiera('wso2::service_name')
+    $service_template         = hiera('wso2::service_template')
+    $usermgt_datasource       = hiera('wso2::usermgt_datasource')
+    $local_reg_datasource     = hiera('wso2::local_reg_datasource')
+    $clustering               = hiera('wso2::clustering')
+    $dep_sync                 = hiera('wso2::dep_sync')
+    $ports                    = hiera('wso2::ports')
+    $jvm                      = hiera('wso2::jvm')
+    $sso_authentication       = hiera('wso2::sso_authentication')
+    $user_management          = hiera('wso2::user_management')
+    $enable_secure_vault      = hiera('wso2::enable_secure_vault')
+    $secure_vault_configs     = hiera('wso2::secure_vault_configs', { })
+    $key_stores               = hiera('wso2::key_stores')
     $post_install_resources   = hiera('wso2::post_install_resources', { } )
     $post_configure_resources = hiera('wso2::post_configure_resources', { } )
     $post_start_resources     = hiera('wso2::post_start_resources', { } )
 
-  }else
-  {
-
-    $java_class             = 'wso2base::java'
-    $java_install_dir       = '/mnt/jdk-7u80'
-    $java_source_file       = 'jdk-7u80-linux-x64.tar.gz'
-    $java_prefs_system_root = '/home/wso2user/.java'
-    $java_prefs_user_root   = '/home/wso2user/.java/.systemPrefs'
-    $java_home              = '/opt/java'
+  } else {
+    $java_class               = 'wso2base::java'
+    $java_install_dir         = '/mnt/jdk-7u80'
+    $java_source_file         = 'jdk-7u80-linux-x64.tar.gz'
+    $java_prefs_system_root   = '/home/wso2user/.java'
+    $java_prefs_user_root     = '/home/wso2user/.java/.systemPrefs'
+    $java_home                = '/opt/java'
     # system configuration data
-    $packages               = [
+    $packages                 = [
       'zip',
       'unzip'
     ]
-    $template_list          = [
+    $patch_list               = []
+    $template_list            = [
       'repository/conf/carbon.xml',
       'repository/conf/user-mgt.xml',
       'repository/conf/registry.xml',
@@ -90,125 +95,118 @@ class wso2base::params() {
       'repository/conf/security/authenticators.xml',
       'bin/wso2server.sh'
     ]
-    $file_list              = []
-    $system_file_list       = []
-    $directory_list         = []
-    $hosts_mapping          = {
+    $file_list                = []
+    $system_file_list         = []
+    $directory_list           = []
+    $cert_list                = []
+    $hosts_mapping            = {
       localhost => {
-        ip => '127.0.0.1',
+        ip   => '127.0.0.1',
         name => 'localhost'
       }
     }
-    $master_datasources     = {
-      wso2_carbon_db  => {
-        name => 'WSO2_CARBON_DB',
-        description => 'The datasource used for registry and user manager',
-        driver_class_name => 'org.h2.Driver',
-        url => 'jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000',
-        username => 'wso2carbon',
-        password => 'wso2carbon',
-        jndi_config => 'jdbc/WSO2CarbonDB',
-        max_active => '50',
-        max_wait => '60000',
-        test_on_borrow => true,
+    $master_datasources       = {
+      wso2_carbon_db => {
+        name                => 'WSO2_CARBON_DB',
+        description         => 'The datasource used for registry and user manager',
+        driver_class_name   => 'org.h2.Driver',
+        url                 => 'jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000',
+        username            => 'wso2carbon',
+        password            => 'wso2carbon',
+        jndi_config         => 'jdbc/WSO2CarbonDB',
+        max_active          => '50',
+        max_wait            => '60000',
+        test_on_borrow      => true,
         default_auto_commit => false,
-        validation_query => 'SELECT 1',
+        validation_query    => 'SELECT 1',
         validation_interval => '30000'
       }
     }
-    $registry_mounts        = []
-    $carbon_home_symlink    = "/mnt/${::product_name}-${::product_version}"
-    $wso2_user              = 'wso2user'
-    $wso2_group             = 'wso2'
-    $maintenance_mode       = 'refresh'
-    $install_mode           = 'file_bucket'
-    $install_dir            = "/mnt/${::ipaddress}"
-    $pack_dir               = '/mnt/packs'
-    $pack_filename          = "${::product_name}-${::product_version}.zip"
-    $pack_extracted_dir     = "${::product_name}-${::product_version}"
-    $hostname               = 'localhost'
-    $mgt_hostname           = 'localhost'
-    $worker_node            = false
-    $patches_dir            = 'repository/components/patches'
-    $service_name           = "${::product_name}"
-    $service_template       = 'wso2base/wso2service.erb'
-    $usermgt_datasource     = 'wso2_carbon_db'
-    $local_reg_datasource   = 'wso2_carbon_db'
-    $clustering             = {
-      enabled => false,
+    $registry_mounts          = []
+    $carbon_home_symlink      = "/mnt/${::product_name}-${::product_version}"
+    $wso2_user                = 'wso2user'
+    $wso2_group               = 'wso2'
+    $maintenance_mode         = 'refresh'
+    $install_mode             = 'file_bucket'
+    $install_dir              = "/mnt/${::ipaddress}"
+    $pack_dir                 = '/mnt/packs'
+    $pack_filename            = "${::product_name}-${::product_version}.zip"
+    $pack_extracted_dir       = "${::product_name}-${::product_version}"
+    $hostname                 = 'localhost'
+    $mgt_hostname             = 'localhost'
+    $worker_node              = false
+    $patches_dir              = 'repository/components/patches'
+    $service_name             = $::product_name
+    $service_template         = 'wso2base/wso2service.erb'
+    $usermgt_datasource       = 'wso2_carbon_db'
+    $local_reg_datasource     = 'wso2_carbon_db'
+    $clustering               = {
+      enabled           => false,
       membership_scheme => 'wka',
-      domain => 'wso2.carbon.domain',
+      domain            => 'wso2.carbon.domain',
       local_member_host => '127.0.0.1',
       local_member_port => '4000',
-      sub_domain => 'mgt',
-      wka => {
+      sub_domain        => 'mgt',
+      wka               => {
         members => [
           {
             hostname => '127.0.0.1',
-            port => 4000
+            port     => 4000
           }
         ]
       }
     }
-    $dep_sync               = {
+    $dep_sync                 = {
       enabled => false
     }
-    $ports                  = {
+    $ports                    = {
       offset => 0
     }
-    $jvm                    = {
-      xms => '256m',
-      xmx => '1024m',
+    $jvm                      = {
+      xms           => '256m',
+      xmx           => '1024m',
       max_perm_size => '256m'
     }
-    $ipaddress              = "${::ipaddress}"
-    $fqdn                   = "${::fqdn}"
-    $sso_authentication     = {
+    $sso_authentication       = {
       enabled => false
     }
-    $user_management        = {
+    $user_management          = {
       admin_role      => 'admin',
       admin_username  => 'admin',
       admin_password  => 'admin'
     }
-    $enable_secure_vault    = false
-    $secure_vault_configs   = []
-    $key_stores             = {
-      key_store => {
-        location => 'repository/resources/security/wso2carbon.jks',
-        type => 'JKS',
-        password => 'wso2carbon',
-        key_alias => 'wso2carbon',
+    $enable_secure_vault      = false
+    $secure_vault_configs     = []
+    $key_stores               = {
+      key_store              => {
+        location     => 'repository/resources/security/wso2carbon.jks',
+        type         => 'JKS',
+        password     => 'wso2carbon',
+        key_alias    => 'wso2carbon',
         key_password => 'wso2carbon'
       },
-      registry_key_store => {
-        location => 'repository/resources/security/wso2carbon.jks',
-        type => 'JKS',
-        password => 'wso2carbon',
-        key_alias => 'wso2carbon',
+      registry_key_store     => {
+        location     => 'repository/resources/security/wso2carbon.jks',
+        type         => 'JKS',
+        password     => 'wso2carbon',
+        key_alias    => 'wso2carbon',
         key_password => 'wso2carbon'
       },
-      trust_store => {
+      trust_store            => {
         location => 'repository/resources/security/client-truststore.jks',
-        type => 'JKS',
+        type     => 'JKS',
         password => 'wso2carbon'
       },
-      connector_key_store => {
+      connector_key_store    => {
         location => 'repository/resources/security/wso2carbon.jks',
         password => 'wso2carbon'
       },
-      user_trusted_rp_store => {
-        location => 'repository/resources/security/userRP.jks',
-        type => 'JKS',
-        password => 'wso2carbon',
+      user_trusted_rp_store  => {
+        location     => 'repository/resources/security/userRP.jks',
+        type         => 'JKS',
+        password     => 'wso2carbon',
         key_password => 'wso2carbon'
       }
     }
-    $post_install_resources             = undef
-    $post_configure_resources           = undef
-    $post_start_resources               = undef
-    $patch_list  = []
-
   }
-
 }

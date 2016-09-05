@@ -15,20 +15,24 @@
 #----------------------------------------------------------------------------
 
 # Add marathon-lb certificate to wso2 server's trust-store
-define wso2base::import_cert ($carbon_home, $java_home, $cert_file, $trust_store_password, $alias_name) {
-    ensure_resource('file', "${carbon_home}/repository/resources/security/${cert_file}", {
-      ensure  => file,
-      owner   => $owner,
-      group   => $group,
-      mode    => '0754',
-      source  => ["puppet:///modules/wso2base/${cert_file}"]
-    })
+define wso2base::import_cert ($carbon_home, $java_home, $owner, $group, $wso2_module, $trust_store_password) {
+  $cert_file = $name['file']
+  $alias     = $name['alias']
 
-    exec {'Importing marathon-lb cert':
-      path      => "${java_home}/bin",
-      cwd       => "${carbon_home}/repository/resources/security",
-      command   => "keytool -importcert -noprompt -alias ${alias_name} -keystore client-truststore.jks -storepass ${trust_store_password} -file ${cert_file}",
-      logoutput => 'on_failure',
-      require   => File["${carbon_home}/repository/resources/security/${cert_file}"]
-    }
+  ensure_resource('file', "${carbon_home}/repository/resources/security/${cert_file}", {
+    ensure  => file,
+    owner   => $owner,
+    group   => $group,
+    mode    => '0754',
+    source  => ["puppet:///modules/${wso2_module}/certs/${cert_file}", "puppet:///modules/wso2base/certs/${cert_file}"]
+  })
+
+  exec { "import_cert_${cert_file}":
+    path      => "${java_home}/bin",
+    cwd       => "${carbon_home}/repository/resources/security",
+    command   => "keytool -importcert -noprompt -alias ${alias} -keystore client-truststore.jks
+                  -storepass ${trust_store_password} -file ${cert_file} && rm -f ${cert_file}",
+    logoutput => 'on_failure',
+    require   => File["${carbon_home}/repository/resources/security/${cert_file}"]
   }
+}

@@ -18,7 +18,7 @@
 class wso2base::java (
   $java_install_dir     = $wso2base::params::java_install_dir,
   $java_source_file     = $wso2base::params::java_source_file,
-  $java_home            = $wso2base::params::java_home,
+  $java_home            = $wso2base::params::java_home
 ) inherits wso2base::params {
 
   ensure_resource('file', $java_install_dir, {
@@ -54,7 +54,7 @@ class wso2base::java (
   }
 
   # Clean up content in cachedir as 7terminals-java module doesn't clean the cachedir
-  exec {'remove_java_cache':
+  exec { 'remove_java_cache':
     command => "/bin/rm -rf ${cachedir}",
     require => File['/etc/profile.d/set_java_home.sh'],
   }

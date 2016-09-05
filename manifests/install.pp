@@ -15,9 +15,20 @@
 #----------------------------------------------------------------------------
 
 # Downloads the pack, extract and set user permissions
-define wso2base::install ($mode, $install_dir, $pack_filename, $pack_dir, $user, $group, $product_name) {
-  $carbon_home        = "${install_dir}/${::product_name}-${::product_version}"
-  $pack_file_abs_path = "${pack_dir}/${pack_filename}"
+class wso2base::install {
+
+  $wso2_group          = $wso2base::wso2_group
+  $wso2_user           = $wso2base::wso2_user
+  $vm_type             = $wso2base::vm_type
+  $mode                = $wso2base::install_mode
+  $install_dir         = $wso2base::install_dir
+  $pack_filename       = $wso2base::pack_filename
+  $pack_dir            = $wso2base::pack_dir
+  $carbon_home_symlink = $wso2base::carbon_home_symlink
+  $carbon_home         = $wso2base::carbon_home
+  $pack_file_abs_path  = $wso2base::pack_file_abs_path
+
+  contain('wso2base::system', 'wso2base::clean')
 
   # create directories for installation if they do not exist
   # ensure_resource('file', [$install_dir, $pack_dir], { ensure => 'directory' })
@@ -49,9 +60,9 @@ define wso2base::install ($mode, $install_dir, $pack_filename, $pack_dir, $user,
     'file_bucket': {
       ensure_resource('file', $pack_file_abs_path, {
         mode           => 750,
-        owner          => $user,
-        group          => $group,
-        source         => ["puppet:///modules/${product_name}/${pack_filename}", "puppet:///files/packs/${pack_filename}"],
+        owner          => $wso2_user,
+        group          => $wso2_group,
+        source         => ["puppet:///modules/${caller_module_name}/${pack_filename}", "puppet:///files/packs/${pack_filename}"],
         notify         => Exec["extract_${pack_file_abs_path}"],
         require        => Wso2base::Ensure_directory_structures[$install_dirs]
       })
@@ -76,7 +87,7 @@ define wso2base::install ($mode, $install_dir, $pack_filename, $pack_dir, $user,
   ensure_resource('exec', "set_ownership_${carbon_home}", {
     path               => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     cwd                => $carbon_home,
-    command            => "chown -R ${user}:${group} ./",
+    command            => "chown -R ${wso2_user}:${wso2_group} ./",
     logoutput          => 'on_failure',
     timeout            => 0,
     refreshonly        => true,
@@ -93,12 +104,19 @@ define wso2base::install ($mode, $install_dir, $pack_filename, $pack_dir, $user,
     refreshonly        => true
   })
 
-  if $::vm_type == 'docker' {
-    # Remove wso2 product pack archive
+  if $vm_type == 'docker' {
+    # Remove wso2 product pack zip archive when provisioning the Docker image
+    # We are going to re-use the zip archive in non-Docker scenarios to minimize network traffic (for eg. AWS-EC2)
     exec { "remove_product_pack_${carbon_home}":
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       command => "rm -rf ${pack_file_abs_path}",
       require =>  Exec["set_permissions_${carbon_home}"]
+    }
+  } else {
+    # Create a symlink
+    file { $carbon_home_symlink:
+      ensure => 'link',
+      target => $carbon_home
     }
   }
 }
