@@ -19,6 +19,7 @@ class wso2base::params {
   # Set facter variables
   $product_name               = $::product_name
   $product_version            = $::product_version
+  $platform_version           = $::platform_version
   $vm_type                    = $::vm_type
   $ipaddress                  = $::ipaddress
   $fqdn                       = $::fqdn
@@ -35,9 +36,9 @@ class wso2base::params {
     $patch_list               = hiera('wso2::patch_list', { } )
     $template_list            = hiera_array('wso2::template_list')
     $file_list                = hiera_array('wso2::file_list')
-    $system_file_list         = hiera_array('wso2::system_file_list')
+    $system_file_list         = hiera_hash('wso2::system_file_list')
     $directory_list           = hiera_array('wso2::directory_list', [])
-    $cert_list                = hiera_array('wso2::cert_list', [])
+    $cert_list                = hiera_hash('wso2::cert_list', { })
     $hosts_mapping            = hiera_hash('wso2::hosts_mapping')
 
     $master_datasources       = hiera_hash('wso2::master_datasources')
@@ -45,6 +46,7 @@ class wso2base::params {
     $carbon_home_symlink      = hiera('wso2::carbon_home_symlink')
     $wso2_user                = hiera('wso2::user')
     $wso2_group               = hiera('wso2::group')
+    $remote_file_url          = hiera('remote_file_url', undef)
     $maintenance_mode         = hiera('wso2::maintenance_mode')
     $install_mode             = hiera('wso2::install_mode')
     $install_dir              = hiera('wso2::install_dir')
@@ -66,11 +68,8 @@ class wso2base::params {
     $sso_authentication       = hiera('wso2::sso_authentication')
     $user_management          = hiera('wso2::user_management')
     $enable_secure_vault      = hiera('wso2::enable_secure_vault')
-    $secure_vault_configs     = hiera('wso2::secure_vault_configs', { })
+    $secure_vault_configs     = hiera('wso2::secure_vault_configs', undef)
     $key_stores               = hiera('wso2::key_stores')
-    $post_install_resources   = hiera('wso2::post_install_resources', { } )
-    $post_configure_resources = hiera('wso2::post_configure_resources', { } )
-    $post_start_resources     = hiera('wso2::post_start_resources', { } )
 
   } else {
     $java_class               = 'wso2base::java'
@@ -96,9 +95,9 @@ class wso2base::params {
       'bin/wso2server.sh'
     ]
     $file_list                = []
-    $system_file_list         = []
+    $system_file_list         = { }
     $directory_list           = []
-    $cert_list                = []
+    $cert_list                = { }
     $hosts_mapping            = {
       localhost => {
         ip   => '127.0.0.1',
@@ -123,20 +122,20 @@ class wso2base::params {
       }
     }
     $registry_mounts          = []
-    $carbon_home_symlink      = "/mnt/${::product_name}-${::product_version}"
+    $carbon_home_symlink      = "/mnt/${product_name}-${product_version}"
     $wso2_user                = 'wso2user'
     $wso2_group               = 'wso2'
     $maintenance_mode         = 'refresh'
     $install_mode             = 'file_bucket'
-    $install_dir              = "/mnt/${::ipaddress}"
+    $install_dir              = "/mnt/${ipaddress}"
     $pack_dir                 = '/mnt/packs'
-    $pack_filename            = "${::product_name}-${::product_version}.zip"
-    $pack_extracted_dir       = "${::product_name}-${::product_version}"
+    $pack_filename            = "${product_name}-${product_version}.zip"
+    $pack_extracted_dir       = "${product_name}-${product_version}"
     $hostname                 = 'localhost'
     $mgt_hostname             = 'localhost'
     $worker_node              = false
     $patches_dir              = 'repository/components/patches'
-    $service_name             = $::product_name
+    $service_name             = $product_name
     $service_template         = 'wso2base/wso2service.erb'
     $usermgt_datasource       = 'wso2_carbon_db'
     $local_reg_datasource     = 'wso2_carbon_db'
@@ -176,7 +175,6 @@ class wso2base::params {
       admin_password  => 'admin'
     }
     $enable_secure_vault      = false
-    $secure_vault_configs     = []
     $key_stores               = {
       key_store              => {
         location     => 'repository/resources/security/wso2carbon.jks',

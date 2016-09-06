@@ -14,9 +14,8 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
-# Validate parameters
+# wso2base main class. This class validates base configuration parameters
 class wso2base (
-  # system configuration data
   $packages               = $wso2base::params::packages,
   $template_list          = $wso2base::params::template_list,
   $file_list              = $wso2base::params::file_list,
@@ -31,12 +30,11 @@ class wso2base (
   $vm_type                = $wso2base::params::vm_type,
   $wso2_user              = $wso2base::params::wso2_user,
   $wso2_group             = $wso2base::params::wso2_group,
-
-  # Carbon server configuration data
   $product_name           = $wso2base::params::product_name,
   $product_version        = $wso2base::params::product_version,
-  $platform_version,
+  $platform_version       = $wso2base::params::platform_version,
   $carbon_home_symlink    = $wso2base::params::carbon_home_symlink,
+  $remote_file_url        = $wso2base::params::remote_file_url,
   $maintenance_mode       = $wso2base::params::maintenance_mode,
   $install_mode           = $wso2base::params::install_mode,
   $install_dir            = $wso2base::params::install_dir,
@@ -52,6 +50,45 @@ class wso2base (
   $key_stores             = $wso2base::params::key_stores
 ) inherits wso2base::params {
 
-  $carbon_home         = "${install_dir}/${wso2base::product_name}-${wso2base::product_version}"
+  validate_array($packages)
+  validate_array($template_list)
+  validate_array($file_list)
+  validate_array($patch_list)
+  validate_hash($cert_list)
+  validate_hash($system_file_list)
+  validate_array($directory_list)
+  validate_hash($hosts_mapping)
+  validate_string($java_home)
+  validate_string($java_prefs_system_root)
+  validate_string($java_prefs_user_root)
+  validate_string($vm_type)
+  validate_string($wso2_user)
+  validate_string($wso2_group)
+  validate_string($product_name)
+  validate_string($product_version)
+  validate_string($platform_version)
+  validate_string($carbon_home_symlink)
+  validate_string($maintenance_mode)
+  validate_string($install_mode)
+  validate_string($install_dir)
+  validate_string($pack_dir)
+  validate_string($pack_filename)
+  validate_string($pack_extracted_dir)
+  validate_string($patches_dir)
+  validate_string($service_name)
+  validate_string($service_template)
+  validate_string($ipaddress)
+  validate_bool($enable_secure_vault)
+  validate_hash($key_stores)
+
+  if $install_mode == 'file_repo' {
+    validate_string($remote_file_url)
+  }
+
+  if $enable_secure_vault {
+    validate_hash($secure_vault_configs)
+  }
+
+  $carbon_home         = "${install_dir}/${product_name}-${product_version}"
   $pack_file_abs_path  = "${pack_dir}/${pack_filename}"
 }

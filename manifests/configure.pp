@@ -43,18 +43,17 @@ class wso2base::configure {
         group            => $wso2_group,
         wso2_module      => $caller_module_name
     }
+  } else {
+    # If the patch_list is empty then copy all the patches from Puppet patch files source
+    ensure_resource('file', "${carbon_home}/${patches_dir}", {
+      ensure  => present,
+      owner   => $wso2_user,
+      group   => $wso2_group,
+      recurse => remote,
+      mode    => '0754',
+      source  => ["puppet:///modules/${caller_module_name}/patches/${platform_version}"]
+    })
   }
-
-  # Copy all patches inside patch directory
-  ensure_resource('file', "${carbon_home}/${patches_dir}", {
-    ensure  => present,
-    owner   => $wso2_user,
-    group   => $wso2_group,
-    recurse => remote,
-    mode    => '0754',
-    source  => ["puppet:///modules/${caller_module_name}/patches/${platform_version}",
-      "puppet:///modules/wso2base/patches/${platform_version}"]
-  })
 
   if ($directory_list != undef and size($directory_list) > 0) {
     wso2base::ensure_directory_structures {

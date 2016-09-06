@@ -27,11 +27,9 @@ class wso2base::install {
   $carbon_home_symlink = $wso2base::carbon_home_symlink
   $carbon_home         = $wso2base::carbon_home
   $pack_file_abs_path  = $wso2base::pack_file_abs_path
-
-  contain('wso2base::system', 'wso2base::clean')
+  $remote_file_url     = $wso2base::remote_file_url
 
   # create directories for installation if they do not exist
-  # ensure_resource('file', [$install_dir, $pack_dir], { ensure => 'directory' })
   $install_dirs=[$install_dir, $pack_dir]
   wso2base::ensure_directory_structures {
     $install_dirs:
@@ -39,11 +37,9 @@ class wso2base::install {
       carbon_home => $carbon_home
   }
 
-  # download wso2 product pack archive
+  # download wso2 product pack zip archive
   case $mode {
     'file_repo': {
-      $remote_file_url = hiera('remote_file_url')
-
       ensure_resource('exec', $pack_file_abs_path, {
         path           => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         cwd            => $pack_dir,
@@ -62,13 +58,16 @@ class wso2base::install {
         mode           => 750,
         owner          => $wso2_user,
         group          => $wso2_group,
-        source         => ["puppet:///modules/${caller_module_name}/${pack_filename}", "puppet:///files/packs/${pack_filename}"],
+        source         => [
+          "puppet:///modules/${caller_module_name}/${pack_filename}",
+          "puppet:///files/packs/${pack_filename}"
+        ],
         notify         => Exec["extract_${pack_file_abs_path}"],
         require        => Wso2base::Ensure_directory_structures[$install_dirs]
       })
     }
 
-    default: { fail("Install mode ${mode} is not supported by this module") }
+    default: { fail("Install mode ${mode} is not supported by this module.") }
   }
 
   # extract downloaded wso2 product pack archive
@@ -113,7 +112,8 @@ class wso2base::install {
       require =>  Exec["set_permissions_${carbon_home}"]
     }
   } else {
-    # Create a symlink
+    # Create a symlink which has ipaddress in the path as a workaround for H2 local database clustering issue
+    # This should not happen in Docker scenarios since runtime ipaddress differs from provisioning stage
     file { $carbon_home_symlink:
       ensure => 'link',
       target => $carbon_home
