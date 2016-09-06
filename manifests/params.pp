@@ -25,7 +25,7 @@ class wso2base::params {
   $fqdn                       = $::fqdn
 
   # use_hieradata facter flags whether parameter lookup should be done via Hiera
-  if $::use_hieradata == true {
+  if $::use_hieradata == 'true' {
     $java_class               = hiera('java_class')
     $java_prefs_system_root   = hiera('java_prefs_system_root')
     $java_prefs_user_root     = hiera('java_prefs_user_root')
