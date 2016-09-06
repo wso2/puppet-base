@@ -47,7 +47,9 @@ class wso2base (
   $ipaddress              = $wso2base::params::ipaddress,
   $enable_secure_vault    = $wso2base::params::enable_secure_vault,
   $secure_vault_configs   = $wso2base::params::secure_vault_configs,
-  $key_stores             = $wso2base::params::key_stores
+  $key_stores             = $wso2base::params::key_stores,
+  $carbon_home            = $wso2base::params::carbon_home,
+  $pack_file_abs_path     = $wso2base::params::pack_file_abs_path
 ) inherits wso2base::params {
 
   validate_array($packages)
@@ -80,6 +82,8 @@ class wso2base (
   validate_string($ipaddress)
   validate_bool($enable_secure_vault)
   validate_hash($key_stores)
+  validate_string($carbon_home)
+  validate_string($pack_file_abs_path)
 
   if $install_mode == 'file_repo' {
     validate_string($remote_file_url)
@@ -88,7 +92,4 @@ class wso2base (
   if $enable_secure_vault {
     validate_hash($secure_vault_configs)
   }
-
-  $carbon_home         = "${install_dir}/${product_name}-${product_version}"
-  $pack_file_abs_path  = "${pack_dir}/${pack_filename}"
 }

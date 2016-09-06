@@ -26,7 +26,6 @@ class wso2base::system {
   $hosts_mapping          = $wso2base::hosts_mapping
   $java_prefs_system_root = $wso2base::java_prefs_system_root
   $java_prefs_user_root   = $wso2base::java_prefs_user_root
-  $carbon_home            = $wso2base::carbon_home
 
   # Install system packages
   package { $packages:

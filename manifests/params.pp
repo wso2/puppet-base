@@ -207,4 +207,7 @@ class wso2base::params {
       }
     }
   }
+
+  $carbon_home                = "${install_dir}/${product_name}-${product_version}"
+  $pack_file_abs_path         = "${pack_dir}/${pack_filename}"
 }
