@@ -37,6 +37,15 @@ class wso2base::install {
       carbon_home => $carbon_home
   }
 
+  # create required directories inside CARBON_HOME
+  if ($directory_list != undef and size($directory_list) > 0) {
+    wso2base::ensure_directory_structures {
+      $directory_list:
+        system      => false,
+        carbon_home => $carbon_home
+    }
+  }
+
   # download wso2 product pack zip archive
   case $mode {
     'file_repo': {

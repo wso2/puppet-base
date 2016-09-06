@@ -33,8 +33,8 @@ class wso2base::params {
 
     # system configuration data
     $packages                 = hiera_array('packages')
-    $patch_list               = hiera('wso2::patch_list')
     $template_list            = hiera_array('wso2::template_list')
+    $patch_list               = hiera('wso2::patch_list')
     $file_list                = hiera_array('wso2::file_list')
     $system_file_list         = hiera_hash('wso2::system_file_list')
     $directory_list           = hiera_array('wso2::directory_list')

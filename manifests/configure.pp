@@ -55,22 +55,13 @@ class wso2base::configure {
     })
   }
 
-  if ($directory_list != undef and size($directory_list) > 0) {
-    wso2base::ensure_directory_structures {
-      $directory_list:
-        system      => false,
-        carbon_home => $carbon_home
-    }
-  }
-
   if ($template_list != undef and size($template_list) > 0) {
     wso2base::push_templates {
       $template_list:
         owner       => $wso2_user,
         group       => $wso2_group,
         carbon_home => $carbon_home,
-        wso2_module => $caller_module_name,
-        require     => Wso2base::Ensure_directory_structures[$directory_list]
+        wso2_module => $caller_module_name
     }
   }
 
@@ -80,8 +71,7 @@ class wso2base::configure {
         owner       => $wso2_user,
         group       => $wso2_group,
         carbon_home => $carbon_home,
-        wso2_module => $caller_module_name,
-        require     => Wso2base::Ensure_directory_structures[$directory_list]
+        wso2_module => $caller_module_name
     }
   }
 
@@ -90,8 +80,7 @@ class wso2base::configure {
       $system_file_list:
         owner       => $wso2_user,
         group       => $wso2_group,
-        wso2_module => $caller_module_name,
-        require     => Wso2base::Ensure_directory_structures[$directory_list]
+        wso2_module => $caller_module_name
     }
   }
 

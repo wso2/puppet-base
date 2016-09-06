@@ -18,11 +18,11 @@
 class wso2base (
   $packages               = $wso2base::params::packages,
   $template_list          = $wso2base::params::template_list,
-  $file_list              = $wso2base::params::file_list,
-  $patch_list             = $wso2base::params::patch_list,
-  $cert_list              = $wso2base::params::cert_list,
-  $system_file_list       = $wso2base::params::system_file_list,
-  $directory_list         = $wso2base::params::directory_list,
+  $file_list              = undef,
+  $patch_list             = undef,
+  $cert_list              = undef,
+  $system_file_list       = undef,
+  $directory_list         = undef,
   $hosts_mapping          = $wso2base::params::hosts_mapping,
   $java_home              = $wso2base::params::java_home,
   $java_prefs_system_root = $wso2base::params::java_prefs_system_root,
@@ -54,11 +54,21 @@ class wso2base (
 
   validate_array($packages)
   validate_array($template_list)
-  validate_array($file_list)
-  validate_array($patch_list)
-  validate_hash($cert_list)
-  validate_hash($system_file_list)
-  validate_array($directory_list)
+  if $file_list != undef {
+    validate_array($file_list)
+  }
+  if $patch_list != undef {
+    validate_array($patch_list)
+  }
+  if $cert_list != undef {
+    validate_hash($cert_list)
+  }
+  if $system_file_list != undef {
+    validate_hash($system_file_list)
+  }
+  if $directory_list != undef {
+    validate_array($directory_list)
+  }
   validate_hash($hosts_mapping)
   validate_string($java_home)
   validate_string($java_prefs_system_root)
