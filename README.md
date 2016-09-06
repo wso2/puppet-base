@@ -8,7 +8,7 @@ On high level it includes following:
 - Download and extract WSO2 product distribution
 - Apply Carbon Kernel and WSO2 product patches
 - Apply configuration data
-- Start the WSO2 server as a service or in foreground
+- Start WSO2 server as a service or in foreground
 
 ## Supported Operating Systems
 
