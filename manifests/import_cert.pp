@@ -14,7 +14,7 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
-# Add marathon-lb certificate to wso2 server's trust-store
+# Add certificate to wso2 server's trust-store
 define wso2base::import_cert ($carbon_home, $java_home, $owner, $group, $wso2_module, $trust_store_password) {
   $cert_file = $name['file']
   $alias     = $name['alias']
