@@ -33,22 +33,26 @@ class wso2base::params {
 
     # system configuration data
     $packages                 = hiera_array('packages')
-    $patch_list               = hiera('wso2::patch_list', { } )
+    $patch_list               = hiera('wso2::patch_list')
     $template_list            = hiera_array('wso2::template_list')
     $file_list                = hiera_array('wso2::file_list')
     $system_file_list         = hiera_hash('wso2::system_file_list')
-    $directory_list           = hiera_array('wso2::directory_list', [])
-    $cert_list                = hiera_hash('wso2::cert_list', { })
+    $directory_list           = hiera_array('wso2::directory_list')
+    $cert_list                = hiera_hash('wso2::cert_list')
     $hosts_mapping            = hiera_hash('wso2::hosts_mapping')
 
     $master_datasources       = hiera_hash('wso2::master_datasources')
-    $registry_mounts          = hiera_hash('wso2::registry_mounts', { })
+    $registry_mounts          = hiera_hash('wso2::registry_mounts')
     $carbon_home_symlink      = hiera('wso2::carbon_home_symlink')
     $wso2_user                = hiera('wso2::user')
     $wso2_group               = hiera('wso2::group')
-    $remote_file_url          = hiera('remote_file_url', undef)
     $maintenance_mode         = hiera('wso2::maintenance_mode')
     $install_mode             = hiera('wso2::install_mode')
+
+    if $install_mode == 'file_repo' {
+      $remote_file_url        = hiera('remote_file_url')
+    }
+
     $install_dir              = hiera('wso2::install_dir')
     $pack_dir                 = hiera('wso2::pack_dir')
     $pack_filename            = hiera('wso2::pack_filename')
@@ -68,22 +72,28 @@ class wso2base::params {
     $sso_authentication       = hiera('wso2::sso_authentication')
     $user_management          = hiera('wso2::user_management')
     $enable_secure_vault      = hiera('wso2::enable_secure_vault')
-    $secure_vault_configs     = hiera('wso2::secure_vault_configs', undef)
+
+    if $enable_secure_vault {
+      $secure_vault_configs   = hiera('wso2::secure_vault_configs')
+    }
+
     $key_stores               = hiera('wso2::key_stores')
 
   } else {
+
     $java_class               = 'wso2base::java'
     $java_install_dir         = '/mnt/jdk-7u80'
     $java_source_file         = 'jdk-7u80-linux-x64.tar.gz'
     $java_prefs_system_root   = '/home/wso2user/.java'
     $java_prefs_user_root     = '/home/wso2user/.java/.systemPrefs'
     $java_home                = '/opt/java'
+
     # system configuration data
     $packages                 = [
       'zip',
       'unzip'
     ]
-    $patch_list               = []
+
     $template_list            = [
       'repository/conf/carbon.xml',
       'repository/conf/user-mgt.xml',
@@ -94,16 +104,14 @@ class wso2base::params {
       'repository/conf/security/authenticators.xml',
       'bin/wso2server.sh'
     ]
-    $file_list                = []
-    $system_file_list         = { }
-    $directory_list           = []
-    $cert_list                = { }
+
     $hosts_mapping            = {
       localhost => {
         ip   => '127.0.0.1',
         name => 'localhost'
       }
     }
+
     $master_datasources       = {
       wso2_carbon_db => {
         name                => 'WSO2_CARBON_DB',
@@ -121,7 +129,7 @@ class wso2base::params {
         validation_interval => '30000'
       }
     }
-    $registry_mounts          = []
+
     $carbon_home_symlink      = "/mnt/${product_name}-${product_version}"
     $wso2_user                = 'wso2user'
     $wso2_group               = 'wso2'
@@ -139,6 +147,7 @@ class wso2base::params {
     $service_template         = 'wso2base/wso2service.erb'
     $usermgt_datasource       = 'wso2_carbon_db'
     $local_reg_datasource     = 'wso2_carbon_db'
+
     $clustering               = {
       enabled           => false,
       membership_scheme => 'wka',
@@ -155,26 +164,33 @@ class wso2base::params {
         ]
       }
     }
+
     $dep_sync                 = {
       enabled => false
     }
+
     $ports                    = {
       offset => 0
     }
+
     $jvm                      = {
       xms           => '256m',
       xmx           => '1024m',
       max_perm_size => '256m'
     }
+
     $sso_authentication       = {
       enabled => false
     }
+
     $user_management          = {
       admin_role      => 'admin',
       admin_username  => 'admin',
       admin_password  => 'admin'
     }
+
     $enable_secure_vault      = false
+
     $key_stores               = {
       key_store              => {
         location     => 'repository/resources/security/wso2carbon.jks',
