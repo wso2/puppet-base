@@ -1,6 +1,14 @@
 # WSO2 Puppet Base Module
 
-This repository contains the Base Puppet Module for installing and configuring WSO2 products on various environments. Configuration data is managed using [Hiera](http://docs.puppetlabs.com/hiera/1/). Hiera provides a mechanism for separating configuration data from Puppet scripts and managing them in a separate set of YAML files in a hierarchical manner.
+WSO2 base puppet module provides features for installing and configuring WSO2 middleware products.
+On high level it includes following:
+
+- Install Java Runtime
+- Clean CARBON_HOME directory
+- Download and extract WSO2 product distribution
+- Apply Carbon Kernel and WSO2 product patches
+- Apply configuration data
+- Start the WSO2 server as a service or in foreground
 
 ## Supported Operating Systems
 
