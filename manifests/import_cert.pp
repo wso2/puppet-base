@@ -24,7 +24,11 @@ define wso2base::import_cert ($carbon_home, $java_home, $owner, $group, $wso2_mo
     owner   => $owner,
     group   => $group,
     mode    => '0754',
-    source  => ["puppet:///modules/${wso2_module}/certs/${cert_file}", "puppet:///modules/wso2base/certs/${cert_file}"]
+    source  => [
+      "puppet:///modules/${wso2_module}/certs/${cert_file}",
+      "puppet:///modules/wso2base/certs/${cert_file}",
+      "puppet:///files/certs/${cert_file}"
+    ]
   })
 
   exec { "import_cert_${cert_file}":
