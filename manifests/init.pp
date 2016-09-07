@@ -16,44 +16,46 @@
 
 # wso2base main class. This class validates base configuration parameters
 class wso2base (
-  $packages               = $wso2base::params::packages,
-  $template_list          = $wso2base::params::template_list,
-  $file_list              = undef,
-  $patch_list             = undef,
-  $cert_list              = undef,
-  $system_file_list       = undef,
-  $directory_list         = undef,
-  $hosts_mapping          = $wso2base::params::hosts_mapping,
-  $java_home              = $wso2base::params::java_home,
-  $java_prefs_system_root = $wso2base::params::java_prefs_system_root,
-  $java_prefs_user_root   = $wso2base::params::java_prefs_user_root,
-  $vm_type                = $wso2base::params::vm_type,
-  $wso2_user              = $wso2base::params::wso2_user,
-  $wso2_group             = $wso2base::params::wso2_group,
-  $product_name           = $wso2base::params::product_name,
-  $product_version        = $wso2base::params::product_version,
-  $platform_version       = $wso2base::params::platform_version,
-  $carbon_home_symlink    = $wso2base::params::carbon_home_symlink,
-  $remote_file_url        = $wso2base::params::remote_file_url,
-  $maintenance_mode       = $wso2base::params::maintenance_mode,
-  $install_mode           = $wso2base::params::install_mode,
-  $install_dir            = $wso2base::params::install_dir,
-  $pack_dir               = $wso2base::params::pack_dir,
-  $pack_filename          = $wso2base::params::pack_filename,
-  $pack_extracted_dir     = $wso2base::params::pack_extracted_dir,
-  $patches_dir            = $wso2base::params::patches_dir,
-  $service_name           = $wso2base::params::service_name,
-  $service_template       = $wso2base::params::service_template,
-  $ipaddress              = $wso2base::params::ipaddress,
-  $enable_secure_vault    = $wso2base::params::enable_secure_vault,
-  $secure_vault_configs   = $wso2base::params::secure_vault_configs,
-  $key_stores             = $wso2base::params::key_stores,
-  $carbon_home            = $wso2base::params::carbon_home,
-  $pack_file_abs_path     = $wso2base::params::pack_file_abs_path
-) inherits wso2base::params {
+  $packages,
+  $template_list,
+  $file_list,
+  $patch_list,
+  $cert_list,
+  $system_file_list,
+  $directory_list,
+  $hosts_mapping,
+  $java_home,
+  $java_prefs_system_root,
+  $java_prefs_user_root,
+  $vm_type,
+  $wso2_user,
+  $wso2_group,
+  $product_name,
+  $product_version,
+  $platform_version,
+  $carbon_home_symlink,
+  $remote_file_url,
+  $maintenance_mode,
+  $install_mode,
+  $install_dir,
+  $pack_dir,
+  $pack_filename,
+  $pack_extracted_dir,
+  $patches_dir,
+  $service_name,
+  $service_template,
+  $ipaddress,
+  $enable_secure_vault,
+  $secure_vault_configs,
+  $key_stores,
+  $carbon_home,
+  $pack_file_abs_path
+) {
 
   validate_array($packages)
   validate_array($template_list)
+
+  # validate optional parameters only if they are defined
   if $file_list != undef {
     validate_array($file_list)
   }
