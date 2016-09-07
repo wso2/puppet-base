@@ -28,6 +28,7 @@ class wso2base::install {
   $carbon_home         = $wso2base::carbon_home
   $pack_file_abs_path  = $wso2base::pack_file_abs_path
   $remote_file_url     = $wso2base::remote_file_url
+  $directory_list      = $wso2base::directory_list
 
   # create directories for installation if they do not exist
   $install_dirs=[$install_dir, $pack_dir]
