@@ -14,9 +14,9 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
-define wso2base::configure_sso ($carbon_home, $owner, $group, $wso2_module) {
+define wso2base::configure_idp_service_providers($carbon_home, $owner, $group, $wso2_module) {
 
-  $template_path = '/repository/conf/identity/service-providers'
+  $template_path = 'repository/conf/identity/service-providers'
 
   ensure_resource('file', "${carbon_home}/${template_path}/${name}.xml", {
     ensure  => file,
