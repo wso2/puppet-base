@@ -24,6 +24,10 @@ define wso2base::push_system_files ($owner, $group, $wso2_module) {
     group   => $group,
     recurse => remote,
     mode    => '0754',
-    source  => ["puppet:///modules/${wso2_module}/system/${file}"]
+    source  => [
+      "puppet:///modules/${wso2_module}/system/${file}",
+      "puppet:///modules/wso2base/system/${file}",
+      "puppet:///files/system/${file}"
+    ]
   })
 }

@@ -23,7 +23,8 @@ define wso2base::push_files ($carbon_home, $owner, $group, $wso2_module) {
     mode    => '0754',
     source  => [
       "puppet:///modules/${wso2_module}/configs/${name}",
-      "puppet:///modules/wso2base/configs/${name}"
+      "puppet:///modules/wso2base/configs/${name}",
+      "puppet:///files/configs/${name}"
     ]
   })
 }
