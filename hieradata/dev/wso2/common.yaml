@@ -55,7 +55,10 @@ wso2::template_list:
 wso2::file_list: []
 
 #Files to be copied to system
-wso2::system_file_list: []
+wso2::system_file_list: {}
+
+#Registry Mounts
+wso2::registry_mounts: {}
 
 # JVM settings
 wso2::jvm:
