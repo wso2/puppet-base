@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 ~ Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 ~
@@ -15,15 +15,14 @@
 ~ limitations under the License.
 ~
   -->
-
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>org.wso2.puppet</groupId>
     <artifactId>wso2base-puppet-module</artifactId>
     <packaging>pom</packaging>
-    <version>2.1.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>WSO2 Base Puppet Module</name>
 
     <licenses>
@@ -40,6 +39,7 @@
                 <inherited>true</inherited>
                 <version>2.5.3</version>
                 <configuration>
+                    <finalName>${project.artifactId}-${puppet.hieradata}-${project.version}</finalName>
                     <descriptor>package.xml</descriptor>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
@@ -58,7 +58,7 @@
 
     <profiles>
         <profile>
-            <!-- pedantic profile to run RAT plugin -->
+            <!-- Pedantic profile to run RAT plugin -->
             <id>pedantic</id>
             <build>
                 <plugins>
@@ -71,7 +71,7 @@
                                 <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
                                     <licenseFamilyCategory>WSO2</licenseFamilyCategory>
                                     <licenseFamilyName>WSO2 License 1.0</licenseFamilyName>
-                                    <notes></notes>
+                                    <notes />
                                     <patterns>
                                         <pattern>Copyright WSO2 Inc. (http://www.wso2.org) All Rights Reserved.</pattern>
                                         <pattern>WSO2 Inc. (http://www.wso2.org) All Rights Reserved.</pattern>
@@ -100,6 +100,7 @@
                                 <exclude>**/*.iws</exclude>
                                 <exclude>**/*.ipr</exclude>
                                 <exclude>**/.gitignore</exclude>
+                                <exclude>**/.pmtignore</exclude>
                                 <exclude>**/.gitkeep</exclude>
                                 <exclude>**/*.key</exclude>
                                 <exclude>**/*.json</exclude>
@@ -121,6 +122,36 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- Puppet build profile to run puppet module build command -->
+            <id>puppet-build</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <configuration>
+                                    <executable>puppet</executable>
+                                    <workingDirectory>${puppet.module.home}</workingDirectory>
+                                    <arguments>
+                                        <argument>module</argument>
+                                        <argument>build</argument>
+                                    </arguments>
+                                </configuration>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>exec</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -156,6 +187,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <puppet.module.home>${project.basedir}</puppet.module.home>
+        <puppet.hieradata>hieradata</puppet.hieradata>
     </properties>
 
 </project>

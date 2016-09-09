@@ -1,2 +1,6 @@
+pkg/
 hieradata/
-hiera.yaml
+.vagrant
+*.iml
+pom.xml
+package.xml

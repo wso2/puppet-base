@@ -18,86 +18,36 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
     <id>package</id>
     <formats>
         <format>zip</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
+
     <fileSets>
-
         <fileSet>
-            <directory>${project.basedir}/templates/</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/templates/</outputDirectory>
-            <includes>
-                <include>**/*.erb</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/manifests/</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/manifests/</outputDirectory>
-            <includes>
-                <include>**/*.pp</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.basedir}/files</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/files/</outputDirectory>
-            <includes>
-                <include>files/**</include>
-                <include>manifests/**</include>
-                <include>templates/**</include>
-                <include>metadata.json</include>
-            </includes>
-            <excludes>
-                <exclude>**/*.zip</exclude>
-                <exclude>**/*.jar</exclude>
-                <exclude>**/*.tar.gz</exclude>
-                <exclude>**/.git*</exclude>
-            </excludes>
-        </fileSet>
-
-<!--
-        <fileSet>
-            <directory>${project.basedir}/../../hieradata</directory>
-            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata</outputDirectory>
+            <directory>${project.basedir}/hieradata</directory>
+            <outputDirectory>${project.artifactId}-${puppet.hieradata}-${project.version}/hieradata</outputDirectory>
             <includes>
                 <include>**/*</include>
             </includes>
-            <excludes>
-                <exclude>**/wso2/**</exclude>
-            </excludes>
-        </fileSet> -->
+        </fileSet>
     </fileSets>
 
     <files>
         <file>
-            <source>metadata.json</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
-        </file>
-<!--
-        <file>
-            <source>${project.basedir}/../../hiera.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/</outputDirectory>
-        </file>
-        <file>
-            <source>${project.basedir}/../../hieradata/dev/wso2/common.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/dev/wso2/</outputDirectory>
-        </file>
-        <file>
-            <source>${project.basedir}/../../hieradata/dev/common.yaml</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/hieradata/dev/</outputDirectory>
-        </file> -->
-        <file>
             <source>LICENSE</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
+            <outputDirectory>${project.artifactId}-${puppet.hieradata}-${project.version}/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
         <file>
             <source>README.md</source>
-            <outputDirectory>${pom.artifactId}-${pom.version}/</outputDirectory>
+            <outputDirectory>${project.artifactId}-${puppet.hieradata}-${project.version}/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
     </files>
+
 </assembly>

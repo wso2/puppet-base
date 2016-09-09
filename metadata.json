@@ -1,6 +1,6 @@
 {
   "name": "wso2-wso2base",
-  "version": "2.1.0",
+  "version": "1.0.0",
   "author": "WSO2",
   "license": "Apache-2.0",
   "summary": "WSO2 base libraries Puppet module",
