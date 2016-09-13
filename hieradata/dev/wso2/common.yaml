@@ -51,15 +51,6 @@ wso2::template_list:
 #  - bin/ciphertool.sh
 #  - password-tmp
 
-# File list to be copied to the server
-wso2::file_list: []
-
-#Files to be copied to system
-wso2::system_file_list: {}
-
-#Registry Mounts
-wso2::registry_mounts: {}
-
 # JVM settings
 wso2::jvm:
   xms: 256m
@@ -104,8 +95,6 @@ wso2::dep_sync:
      password: password
      append_tenant_id: true
 
-# Array of common packages to be installed to support WSO2 products
-packages: []
 # User management datasource defaults to local h2 db
 wso2::usermgt_datasource: wso2_carbon_db
 
