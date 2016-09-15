@@ -35,7 +35,9 @@ class wso2base::install {
   wso2base::ensure_directory_structures {
     $install_dirs:
       system      => true,
-      carbon_home => $carbon_home
+      carbon_home => $carbon_home,
+      owner       => $wso2_user,
+      group       => $wso2_group
   }
 
   # create required directories inside CARBON_HOME
@@ -43,7 +45,9 @@ class wso2base::install {
     wso2base::ensure_directory_structures {
       $directory_list:
         system      => false,
-        carbon_home => $carbon_home
+        carbon_home => $carbon_home,
+        owner       => $wso2_user,
+        group       => $wso2_group
     }
   }
 
@@ -96,7 +100,7 @@ class wso2base::install {
   ensure_resource('exec', "set_ownership_${carbon_home}", {
     path               => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     cwd                => $carbon_home,
-    command            => "chown -R ${wso2_user}:${wso2_group} ./",
+    command            => "chown -R ${wso2_user}:${wso2_group} ${install_dir}",
     logoutput          => 'on_failure',
     timeout            => 0,
     refreshonly        => true,
@@ -107,7 +111,7 @@ class wso2base::install {
   ensure_resource('exec', "set_permissions_${carbon_home}", {
     path               => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     cwd                => $carbon_home,
-    command            => 'chmod -R 754 ./',
+    command            => "chmod -R 754 ${install_dir}",
     logoutput          => 'on_failure',
     timeout            => 0,
     refreshonly        => true
