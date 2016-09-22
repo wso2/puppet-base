@@ -149,7 +149,7 @@ wso2::datasources::h2::validation_query: 'SELECT 1'
 
 # MySQL datasources configuration
 wso2::datasources::mysql::username: 'root'
-wso2::datasources::mysql::password: 'root'
+wso2::datasources::mysql::password: '123'
 wso2::datasources::mysql::connector_jar: 'mysql-connector-java-5.1.36-bin.jar'
 wso2::datasources::mysql::driver_class_name: 'com.mysql.jdbc.Driver'
 wso2::datasources::mysql::validation_query: 'SELECT 1'

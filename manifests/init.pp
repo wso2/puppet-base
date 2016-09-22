@@ -63,7 +63,7 @@ class wso2base (
     validate_array($patch_list)
   }
   if $cert_list != undef {
-    validate_hash($cert_list)
+    validate_array($cert_list)
   }
   if $system_file_list != undef {
     validate_hash($system_file_list)

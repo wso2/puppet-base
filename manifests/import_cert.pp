@@ -34,9 +34,17 @@ define wso2base::import_cert ($carbon_home, $java_home, $owner, $group, $wso2_mo
   exec { "import_cert_${cert_file}":
     path      => "${java_home}/bin",
     cwd       => "${carbon_home}/repository/resources/security",
-    command   => "keytool -importcert -noprompt -alias ${alias} -keystore client-truststore.jks
-                  -storepass ${trust_store_password} -file ${cert_file} && rm -f ${cert_file}",
+    command   => "keytool -importcert -noprompt -alias ${alias} -keystore client-truststore.jks -storepass ${trust_store_password} -file ${cert_file}",
     logoutput => 'on_failure',
-    require   => File["${carbon_home}/repository/resources/security/${cert_file}"]
+    require   => File["${carbon_home}/repository/resources/security/${cert_file}"],
+    notify    => Exec["delete_cert_${cert_file}"],
+  }
+
+  exec { "delete_cert_${cert_file}":
+    path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+    cwd       => "${carbon_home}/repository/resources/security",
+    command   => "rm -rf ${cert_file}",
+    logoutput => 'on_failure',
+    refreshonly => true,
   }
 }
