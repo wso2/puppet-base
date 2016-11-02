@@ -15,11 +15,10 @@
    #  specific language governing permissions and limitations
    #  under the License.
 %>
-
-<!--
-   The list of static or well-known members. These entries will only be valid if the
-   "membershipScheme" above is set to "wka"
--->
+        <!--
+           The list of static or well-known members. These entries will only be valid if the
+           "membershipScheme" above is set to "wka"
+        -->
         <members>
           <%- @clustering['wka']['members'].each do |member| -%>
             <member>
