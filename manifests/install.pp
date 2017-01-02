@@ -51,6 +51,17 @@ class wso2base::install {
     }
   }
 
+  wso2base::clean_deployment { 
+    'clean_on_pack_change': 
+      pack_file_abs_path => $pack_file_abs_path,
+      caller_module_name => $caller_module_name,
+      pack_filename      => $pack_filename,
+      user               => $wso2_user,
+      group              => $wso2_group,
+      install_dir        => $install_dir,
+      pack_dir           => $pack_dir
+  }
+
   # download wso2 product pack zip archive
   case $mode {
     'file_repo': {
@@ -68,17 +79,19 @@ class wso2base::install {
     }
 
     'file_bucket': {
-      ensure_resource('file', $pack_file_abs_path, {
-        mode           => 750,
+      file { $pack_file_abs_path:
+        ensure         => present,
         owner          => $wso2_user,
         group          => $wso2_group,
+        mode           => 750,
         source         => [
-          "puppet:///modules/${caller_module_name}/${pack_filename}",
+          "puppet:///modules/${caller_module_name}/${pack_filename}", 
           "puppet:///files/packs/${pack_filename}"
         ],
+        require        => Wso2base::Clean_deployment['clean_on_pack_change'],
         notify         => Exec["extract_${pack_file_abs_path}"],
-        require        => Wso2base::Ensure_directory_structures[$install_dirs]
-      })
+        replace        => true
+      }
     }
 
     default: { fail("Install mode ${mode} is not supported by this module.") }
