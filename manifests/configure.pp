@@ -19,6 +19,7 @@ class wso2base::configure {
   $patches_dir          = $wso2base::patches_dir
   $template_list        = $wso2base::template_list
   $file_list            = $wso2base::file_list
+  $remove_file_list     = $wso2base::remove_file_list
   $patch_list           = $wso2base::patch_list
   $cert_list            = $wso2base::cert_list
   $system_file_list     = $wso2base::system_file_list
