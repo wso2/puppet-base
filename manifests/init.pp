@@ -19,7 +19,7 @@ class wso2base (
   $packages,
   $template_list,
   $file_list,
-  $remove_file_list
+  $remove_file_list,
   $patch_list,
   $cert_list,
   $system_file_list,
