@@ -19,6 +19,7 @@ class wso2base (
   $packages,
   $template_list,
   $file_list,
+  $remove_file_list
   $patch_list,
   $cert_list,
   $system_file_list,
@@ -58,6 +59,9 @@ class wso2base (
   # validate optional parameters only if they are defined
   if $file_list != undef {
     validate_array($file_list)
+  }
+  if $remove_file_list != undef {
+    validate_array($remove_file_list)
   }
   if $patch_list != undef {
     validate_array($patch_list)
