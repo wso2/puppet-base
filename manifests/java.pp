@@ -16,8 +16,8 @@
 #
 # Class to manage Java installation
 class wso2base::java (
-  $deploymentdir     = '/mnt/jdk-7u80',
-  $source            = 'jdk-7u80-linux-x64.tar.gz',
+  $deploymentdir     = '/mnt/jdk-8u112',
+  $source            = 'jdk-8u112-linux-x64.tar.gz',
   $java_home         = '/opt/java',
   $user              = 'root',
   $cachedir          = '/opt/java-setup',

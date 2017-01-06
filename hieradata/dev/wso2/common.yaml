@@ -225,8 +225,8 @@ java_prefs_system_root: "/home/%{hiera('wso2::user')}/.java"
 java_prefs_user_root: "/home/%{hiera('wso2::user')}/.java/.systemPrefs"
 
 # wso2base::java class automatic parameter lookup
-wso2base::java::java_install_dir: /mnt/jdk-7u80
-wso2base::java::java_source_file: jdk-7u80-linux-x64.tar.gz
+wso2base::java::java_install_dir: /mnt/jdk-8u112
+wso2base::java::java_source_file: jdk-8u112-linux-x64.tar.gz
 wso2base::java::wso2_user: "%{hiera('wso2::user')}"
 wso2base::java::wso2_group: "%{hiera('wso2::group')}"
 wso2base::java::java_home: /opt/java
