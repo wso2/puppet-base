@@ -114,7 +114,8 @@ class wso2base::configure {
           owner       => $wso2_user,
           group       => $wso2_group,
           carbon_home => $carbon_home,
-          wso2_module => $caller_module_name
+          wso2_module => $caller_module_name,
+	  require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
       }
     }
 }

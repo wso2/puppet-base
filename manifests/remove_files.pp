@@ -19,7 +19,7 @@ define wso2base::remove_files ($carbon_home, $owner, $group, $wso2_module) {
     ensure  => absent,
     owner   => $owner,
     group   => $group,
-    recurse => remote,
-    mode    => '0754',
+    recurse => false,
+    mode    => '0754'
   })
 }
