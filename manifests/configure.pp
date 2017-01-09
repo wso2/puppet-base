@@ -109,13 +109,13 @@ class wso2base::configure {
   }
 
   if ($remove_file_list != undef and size(remove_file_list) > 0) {
-      wso2base::remove_files {
-        $remove_file_list:
-          owner       => $wso2_user,
-          group       => $wso2_group,
-          carbon_home => $carbon_home,
-          wso2_module => $caller_module_name,
-	  require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
-      }
+    wso2base::remove_files {
+      $remove_file_list:
+        owner       => $wso2_user,
+        group       => $wso2_group,
+        carbon_home => $carbon_home,
+        wso2_module => $caller_module_name,
+        require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
     }
+  }
 }
