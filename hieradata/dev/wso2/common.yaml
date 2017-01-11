@@ -236,3 +236,8 @@ wso2base::java::prefs_user_root: "%{hiera('java_prefs_user_root')}"
 packages:
   - zip
   - unzip
+
+# setting a list of files to be removed from the pack. e.g:
+# wso2::remove_file_list:
+#   - "repository/deployment/server/synapse-configs/default/inbound-endpoints/WebSocketInboundEndpoint.xml"
+#   - "repository/deployment/server/synapse-configs/default/sequences/dispatchSeq.xml"
