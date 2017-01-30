@@ -70,7 +70,7 @@ wso2::worker_node: false
 wso2::clustering:
   enabled: false
   membership_scheme: wka
-  domain: wso2.carbon.domain
+  domain: wso2.am.domain
   local_member_host: 127.0.0.1
   local_member_port: 4000
   sub_domain: worker
