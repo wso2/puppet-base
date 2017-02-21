@@ -59,7 +59,8 @@ class wso2base::install {
       user               => $wso2_user,
       group              => $wso2_group,
       install_dir        => $install_dir,
-      pack_dir           => $pack_dir
+      pack_dir           => $pack_dir,
+      require            => Wso2base::Ensure_directory_structures[$install_dirs]
   }
 
   # download wso2 product pack zip archive
