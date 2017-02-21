@@ -105,6 +105,7 @@ class wso2base::install {
     logoutput          => 'on_failure',
     creates            => "${carbon_home}/bin",
     timeout            => 0,
+    require            => Wso2base::Ensure_directory_structures[$install_dirs],
     refreshonly        => true,
     notify             => Exec["set_ownership_${carbon_home}"]
   })
