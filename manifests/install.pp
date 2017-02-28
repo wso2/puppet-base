@@ -51,8 +51,8 @@ class wso2base::install {
     }
   }
 
-  wso2base::clean_deployment { 
-    'clean_on_pack_change': 
+  wso2base::clean_deployment {
+    'clean_on_pack_change':
       pack_file_abs_path => $pack_file_abs_path,
       caller_module_name => $caller_module_name,
       pack_filename      => $pack_filename,
@@ -86,7 +86,7 @@ class wso2base::install {
         group          => $wso2_group,
         mode           => 750,
         source         => [
-          "puppet:///modules/${caller_module_name}/${pack_filename}", 
+          "puppet:///modules/${caller_module_name}/${pack_filename}",
           "puppet:///files/packs/${pack_filename}"
         ],
         require        => Wso2base::Clean_deployment['clean_on_pack_change'],
@@ -138,14 +138,7 @@ class wso2base::install {
     exec { "remove_product_pack_${carbon_home}":
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       command => "rm -rf ${pack_file_abs_path}",
-      require =>  Exec["set_permissions_${carbon_home}"]
-    }
-  } else {
-    # Create a symlink which has ipaddress in the path as a workaround for H2 local database clustering issue
-    # This should not happen in Docker scenarios since runtime ipaddress differs from provisioning stage
-    file { $carbon_home_symlink:
-      ensure => 'link',
-      target => $carbon_home
+      require => Exec["set_permissions_${carbon_home}"]
     }
   }
 }
