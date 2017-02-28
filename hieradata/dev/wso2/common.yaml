@@ -16,7 +16,7 @@
 wso2::maintenance_mode: refresh
 wso2::install_mode: file_bucket
 wso2::patches_dir: repository/components/patches
-wso2::install_dir: "/mnt/%{::ipaddress}"
+wso2::install_dir: "/mnt"
 wso2::user: wso2user
 wso2::group: wso2
 wso2::pack_dir: /mnt/packs
