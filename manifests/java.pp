@@ -70,7 +70,7 @@ class wso2base::java (
 
     file { "${cachedir}/${source}":
       source  => [
-        "puppet:///modules/${mod_name}/${source}",
+        "puppet:///modules/wso2base/${source}",
         "puppet:///files/packs/${source}"
       ],
       mode    => '0711',
