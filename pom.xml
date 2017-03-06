@@ -22,7 +22,7 @@
     <groupId>org.wso2.puppet</groupId>
     <artifactId>wso2base-puppet-module</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>WSO2 Base Puppet Module</name>
 
     <licenses>
