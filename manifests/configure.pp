@@ -19,6 +19,7 @@ class wso2base::configure {
   $patches_dir          = $wso2base::patches_dir
   $template_list        = $wso2base::template_list
   $file_list            = $wso2base::file_list
+  $remove_file_list     = $wso2base::remove_file_list
   $patch_list           = $wso2base::patch_list
   $cert_list            = $wso2base::cert_list
   $system_file_list     = $wso2base::system_file_list
@@ -104,6 +105,17 @@ class wso2base::configure {
       command   => "sh ciphertool.sh -Dconfigure -Dpassword=${key_store_password}",
       logoutput => 'on_failure',
       require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
+    }
+  }
+
+  if ($remove_file_list != undef and size(remove_file_list) > 0) {
+    wso2base::remove_files {
+      $remove_file_list:
+        owner       => $wso2_user,
+        group       => $wso2_group,
+        carbon_home => $carbon_home,
+        wso2_module => $caller_module_name,
+        require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
     }
   }
 }
