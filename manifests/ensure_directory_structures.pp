@@ -16,14 +16,16 @@
 
 define wso2base::ensure_directory_structures ($system, $carbon_home, $owner, $group) {
   # system - true if path name is absolute, false if relative to $carbon_home
-
+  
   if ($system != undef and $system == true){
     exec { "create_directory_structure_${carbon_home}/${name}":
+      unless  => "test -d ${name}",
       command => "mkdir -p ${name}",
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
   }else{
     exec { "create_directory_structure_${carbon_home}/${name}":
+      unless  => "test -d ${carbon_home}/${name}",
       command => "mkdir -p ${carbon_home}/${name} && chown -R ${owner}:${group} ${carbon_home}/${name}",
       path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     }
