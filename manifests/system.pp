@@ -72,7 +72,7 @@ class wso2base::system {
   }
 
   # Install JDK only if install_java is set to true
-  if ($install_java == 'true') {
+  if ($install_java) {
     # Set Java system preferences directory
     file{ [$java_prefs_system_root, $java_prefs_user_root]:
       ensure  => 'directory',
