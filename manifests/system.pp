@@ -24,6 +24,12 @@ class wso2base::system {
   $service_name           = $wso2base::service_name
   $service_template       = $wso2base::service_template
   $hosts_mapping          = $wso2base::hosts_mapping
+  $install_java           = $wso2base::install_java
+  $java_install_dir       = $wso2base::java_install_dir
+  $java_source_file       = $wso2base::java_source_file
+  $java_user              = $wso2base::java_user
+  $java_group             = $wso2base::java_group
+  $java_home              = $wso2base::java_home
   $java_prefs_system_root = $wso2base::java_prefs_system_root
   $java_prefs_user_root   = $wso2base::java_prefs_user_root
 
@@ -65,12 +71,24 @@ class wso2base::system {
     }
   }
 
-  # Set Java system preferences directory
-  file{ [$java_prefs_system_root, $java_prefs_user_root]:
-    ensure  => 'directory',
-    owner   => $wso2_user,
-    group   => $wso2_group,
-    mode    => '0755',
-    require => [Group[$wso2_group], User[$wso2_user]]
+  # Install JDK only if install_java is set to true
+  if ($install_java == 'true') {
+    # Set Java system preferences directory
+    file{ [$java_prefs_system_root, $java_prefs_user_root]:
+      ensure  => 'directory',
+      owner   => $wso2_user,
+      group   => $wso2_group,
+      mode    => '0755',
+      require => [Group[$wso2_group], User[$wso2_user]]
+    }
+
+    wso2base::java {
+      'jdk_installation':
+        deploymentdir => $java_install_dir,
+        source        => $java_source_file,
+        java_home     => $java_home,
+        user          => $java_user,
+        group         => $java_group
+    }
   }
 }
