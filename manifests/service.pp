@@ -16,14 +16,15 @@
 
 class wso2base::service {
 
-  $vm_type      = $wso2base::vm_type
-  $service_name = $wso2base::service_name
-  $install_dir  = $wso2base::install_dir
-  $carbon_home  = $wso2base::carbon_home
+  $vm_type           = $wso2base::vm_type
+  $service_name      = $wso2base::service_name
+  $install_dir       = $wso2base::install_dir
+  $carbon_home       = $wso2base::carbon_home
+  $autostart_service = $wso2base::autostart_service
 
   # Start the service
   # TODO: start the service only if configuration changes are applied that needs a restart to be effective
-  if $vm_type != 'docker' {
+  if ($vm_type != 'docker') and ($autostart_service) {
     service { $service_name:
       ensure     => running,
       hasstatus  => true,

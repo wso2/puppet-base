@@ -50,6 +50,7 @@ class wso2base (
   $patches_dir,
   $service_name,
   $service_template,
+  $autostart_service,
   $ipaddress,
   $enable_secure_vault,
   $secure_vault_configs,
@@ -105,6 +106,7 @@ class wso2base (
   validate_string($patches_dir)
   validate_string($service_name)
   validate_string($service_template)
+  validate_bool($autostart_service)
   validate_string($ipaddress)
   validate_bool($enable_secure_vault)
   validate_hash($key_stores)

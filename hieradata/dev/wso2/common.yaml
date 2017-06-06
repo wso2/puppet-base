@@ -36,6 +36,9 @@ wso2::fqdn: "%{::fqdn}"
 # System service name
 wso2::service_template: wso2base/wso2service.erb
 
+# Start WSO2 Server Service automatically
+wso2::autostart_service: true
+
 # Puppet template list to be populated
 wso2::template_list:
   - repository/conf/carbon.xml
