@@ -25,6 +25,11 @@ class wso2base (
   $system_file_list,
   $directory_list,
   $hosts_mapping,
+  $install_java,
+  $java_install_dir,
+  $java_source_file,
+  $java_user,
+  $java_group,
   $java_home,
   $java_prefs_system_root,
   $java_prefs_user_root,
@@ -76,6 +81,11 @@ class wso2base (
     validate_array($directory_list)
   }
   validate_hash($hosts_mapping)
+  validate_bool($install_java)
+  validate_string($java_install_dir)
+  validate_string($java_source_file)
+  validate_string($java_user)
+  validate_string($java_group)
   validate_string($java_home)
   validate_string($java_prefs_system_root)
   validate_string($java_prefs_user_root)
