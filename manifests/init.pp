@@ -25,11 +25,6 @@ class wso2base (
   $system_file_list,
   $directory_list,
   $hosts_mapping,
-  $install_java,
-  $java_install_dir,
-  $java_source_file,
-  $java_user,
-  $java_group,
   $java_home,
   $java_prefs_system_root,
   $java_prefs_user_root,
@@ -50,14 +45,13 @@ class wso2base (
   $patches_dir,
   $service_name,
   $service_template,
-  $autostart_service,
   $ipaddress,
   $enable_secure_vault,
   $secure_vault_configs,
   $key_stores,
   $carbon_home,
   $pack_file_abs_path
-) {
+) inherits wso2base::params {
 
   validate_array($packages)
   validate_array($template_list)
@@ -81,15 +75,8 @@ class wso2base (
   if $directory_list != undef {
     validate_array($directory_list)
   }
+
   validate_hash($hosts_mapping)
-  validate_bool($install_java)
-  validate_string($java_install_dir)
-  validate_string($java_source_file)
-  validate_string($java_user)
-  validate_string($java_group)
-  validate_string($java_home)
-  validate_string($java_prefs_system_root)
-  validate_string($java_prefs_user_root)
   validate_string($vm_type)
   validate_string($wso2_user)
   validate_string($wso2_group)
@@ -106,7 +93,6 @@ class wso2base (
   validate_string($patches_dir)
   validate_string($service_name)
   validate_string($service_template)
-  validate_bool($autostart_service)
   validate_string($ipaddress)
   validate_bool($enable_secure_vault)
   validate_hash($key_stores)

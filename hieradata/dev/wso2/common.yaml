@@ -224,14 +224,14 @@ java_prefs_system_root: "/home/%{hiera('wso2::user')}/.java"
 java_prefs_user_root: "/home/%{hiera('wso2::user')}/.java/.systemPrefs"
 
 # wso2base::java class automatic parameter lookup
-wso2base::java::install_java: true
-wso2base::java::java_install_dir: /mnt/jdk-8u131
-wso2base::java::java_source_file: jdk-8u131-linux-x64.tar.gz
-wso2base::java::wso2_user: "%{hiera('wso2::user')}"
-wso2base::java::wso2_group: "%{hiera('wso2::group')}"
-wso2base::java::java_home: "%{hiera('java_home')}"
-wso2base::java::prefs_system_root: "%{hiera('java_prefs_system_root')}"
-wso2base::java::prefs_user_root: "%{hiera('java_prefs_user_root')}"
+wso2::java::install: true
+wso2::java::installation_dir: /mnt/jdk-8u131
+wso2::java::source_file: jdk-8u131-linux-x64.tar.gz
+wso2::java::user: "%{hiera('wso2::user')}"
+wso2::java::group: "%{hiera('wso2::group')}"
+wso2::java::home: "%{hiera('java_home')}"
+wso2::java::prefs_system_root: "%{hiera('java_prefs_system_root')}"
+wso2::java::prefs_user_root: "%{hiera('java_prefs_user_root')}"
 
 packages:
   - zip
