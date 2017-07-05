@@ -73,10 +73,10 @@ status() {
     get_service_status
     service_status=$?
 
-    if [ "${service_status}" -eq ${SERVICE_RUNNING} ]; then
+    if [ ${service_status} -eq ${SERVICE_RUNNING} ]; then
         echo "${PRODUCT_CODE} service is currently running..."
         return ${SERVICE_RUNNING}
-    elif [ "${service_status}" -eq ${SERVICE_STOPPED} ]; then
+    elif [ ${service_status} -eq ${SERVICE_STOPPED} ]; then
         echo "${PRODUCT_CODE} service has been already stopped."
         return ${SERVICE_STOPPED}
     else
@@ -90,7 +90,7 @@ start() {
     get_service_status
     service_status=$?
 
-    if [ "${service_status}" -eq ${SERVICE_RUNNING} ]; then
+    if [ ${service_status} -eq ${SERVICE_RUNNING} ]; then
         echo "${PRODUCT_CODE} service has been already running..."
         return ${SERVICE_RUNNING}
     fi
@@ -102,7 +102,7 @@ start() {
     get_service_status
     service_status=$?
 
-    while [ "${service_status}" -ne "${SERVICE_RUNNING}" ]
+    while [ ${service_status} -ne ${SERVICE_RUNNING} ]
     do
         sleep 1;
         get_service_status
@@ -126,7 +126,7 @@ stop() {
     get_service_status
     service_status=$?
 
-    if [ "${service_status}" -eq ${SERVICE_STOPPED} ]; then
+    if [ ${service_status} -eq ${SERVICE_STOPPED} ]; then
         echo "${PRODUCT_CODE} service has been already stopped."
         return ${SERVICE_STOPPED}
     fi
@@ -135,7 +135,7 @@ stop() {
     su - ${USER} -c "export JAVA_HOME=${JAVA_HOME}; $CMD stop > /dev/null 2>&1 &"
     rm -f $LOCK_FILE
 
-    while [ "${service_status}" -eq "${SERVICE_RUNNING}" ]
+    while [ ${service_status} -eq ${SERVICE_RUNNING} ]
     do
         sleep 1;
         get_service_status
