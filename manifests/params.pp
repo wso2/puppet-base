@@ -22,11 +22,11 @@ class wso2base::params {
     # whether we automatically start wso2service or not
     $autostart_service        = hiera('wso2::autostart_service')
     # java properties
-    $install_java             = hiera('wso2::java::install_java')
-    $java_install_dir         = hiera('wso2::java::java_install_dir')
-    $java_source_file         = hiera('wso2::java::java_source_file')
-    $java_user                = hiera('wso2::java::wso2_user')
-    $java_group               = hiera('wso2::java::wso2_group')
+    $install_java             = hiera('wso2::java::install')
+    $java_install_dir         = hiera('wso2::java::installation_dir')
+    $java_source_file         = hiera('wso2::java::source_file')
+    $java_user                = hiera('wso2::java::user')
+    $java_group               = hiera('wso2::java::group')
 
   } else {
 
