@@ -96,18 +96,6 @@ class wso2base::configure {
     }
   }
 
-  if $enable_secure_vault {
-    $key_store_password   = $secure_vault_configs['key_store_password']['password']
-    exec { "apply_secure_vault_${carbon_home}":
-      user      => $wso2_user,
-      path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      cwd       => "${carbon_home}/bin",
-      command   => "sh ciphertool.sh -Dconfigure -Dpassword=${key_store_password}",
-      logoutput => 'on_failure',
-      require   => [Wso2base::Push_files[$file_list], Wso2base::Push_templates[$template_list]]
-    }
-  }
-
   if ($remove_file_list != undef and size(remove_file_list) > 0) {
     wso2base::remove_files {
       $remove_file_list:
