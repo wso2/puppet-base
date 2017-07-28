@@ -49,8 +49,6 @@ wso2::template_list:
   - repository/conf/axis2/axis2.xml
   - repository/conf/security/authenticators.xml
   - bin/wso2server.sh
-#  - repository/conf/security/cipher-text.properties
-#  - repository/conf/security/cipher-tool.properties
 #  - bin/ciphertool.sh
 #  - password-tmp
 
