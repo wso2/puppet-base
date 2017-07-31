@@ -50,12 +50,12 @@ wso2::template_list:
   - repository/conf/security/authenticators.xml
   - bin/wso2server.sh
 #  - bin/ciphertool.sh
-#  - password-tmp
 
-# Puppet file list to be populated
+# Puppet file list to be copied
 #wso2::file_list:
 #  - repository/conf/security/cipher-tool.properties
 #  - repository/conf/security/cipher-text.properties
+#  - password-tmp
 
 # JVM settings
 wso2::jvm:
