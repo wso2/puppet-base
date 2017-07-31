@@ -23,8 +23,6 @@ class wso2base::configure {
   $patch_list           = $wso2base::patch_list
   $cert_list            = $wso2base::cert_list
   $system_file_list     = $wso2base::system_file_list
-  $secure_vault_configs = $wso2base::secure_vault_configs
-  $enable_secure_vault  = $wso2base::enable_secure_vault
   $carbon_home          = $wso2base::carbon_home
   $wso2_group           = $wso2base::wso2_group
   $wso2_user            = $wso2base::wso2_user
