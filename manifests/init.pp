@@ -102,8 +102,4 @@ class wso2base (
   if $install_mode == 'file_repo' {
     validate_string($remote_file_url)
   }
-
-  if $enable_secure_vault {
-    validate_hash($secure_vault_configs)
-  }
 }
