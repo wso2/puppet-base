@@ -33,6 +33,7 @@ class wso2base::system {
   $java_prefs_system_root = $wso2base::java_prefs_system_root
   $java_prefs_user_root   = $wso2base::java_prefs_user_root
   $startup_script_name    = $wso2base::startup_script_name
+  $pid_file_path          = $wso2base::pid_file_path
 
   # Install system packages
   package { $packages:

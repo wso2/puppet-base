@@ -21,6 +21,8 @@ class wso2base::params {
 
     # server startup script name
     $startup_script_name      = hiera('wso2::startup_script_name')
+    # process id file path
+    $pid_file_path            = hiera('wso2::pid_file_path')
     # whether we automatically start wso2service or not
     $autostart_service        = hiera('wso2::autostart_service')
     # java properties

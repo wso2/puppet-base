@@ -45,7 +45,7 @@ PRODUCT_CODE="<%= @service_name %>"
 JAVA_HOME="<%= @java_home %>"
 CARBON_HOME="<%= @carbon_home %>"
 LOCK_FILE="${CARBON_HOME}/wso2carbon.lck"
-PID_FILE="${CARBON_HOME}/wso2carbon.pid"
+PID_FILE="${CARBON_HOME}/<%= @pid_file_path %>"
 CMD="${CARBON_HOME}/bin/<%= @startup_script_name %>"
 
 SERVICE_RUNNING=0
