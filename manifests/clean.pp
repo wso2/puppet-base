@@ -15,42 +15,6 @@
 #----------------------------------------------------------------------------
 
 class wso2base::clean {
-  $carbon_home   = $wso2base::carbon_home
-  $mode          = $wso2base::maintenance_mode
-  $pack_filename = $wso2base::pack_filename
-  $pack_dir      = $wso2base::pack_dir
-
-  # TODO: use Puppet RAL instead of commands. In other words, get Puppet to do this!
-  case $mode {
-    'refresh': {
-      exec {
-        "remove_lock_file_${carbon_home}":
-          path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          onlyif  => "test -f ${carbon_home}/wso2carbon.lck",
-          command => "rm ${carbon_home}/wso2carbon.lck",
-          notify  =>  Exec["stop_process_${carbon_home}"];
-
-        "stop_process_${carbon_home}":
-          path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/java/bin/',
-          command     => "kill -9 `cat ${carbon_home}/wso2carbon.pid`",
-          refreshonly => true;
-      }
-    }
-
-    'new': {
-      exec { "stop_process_and_remove_CARBON_HOME_${carbon_home}":
-        path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/java/bin/',
-        command => "kill -9 `cat ${carbon_home}/wso2carbon.pid` && rm -rf ${carbon_home}";
-      }
-    }
-
-    'zero': {
-      exec { "stop_process_remove_CARBON_HOME_and_pack_${carbon_home}":
-        path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/java/bin/',
-        command => "kill -9 `cat ${carbon_home}/wso2carbon.pid` && rm -rf ${carbon_home} && rm -f ${pack_dir}/${pack_filename}";
-      }
-    }
-
-    default: { fail("Clean mode ${mode} is not supported by this module") }
-  }
+  # TODO: clean is not required and is to be removed from the upcoming versions of puppet modules
+  # This file is only kept to support backward compatibility
 }

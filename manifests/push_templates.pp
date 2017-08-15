@@ -19,7 +19,7 @@ define wso2base::push_templates ($carbon_home, $owner, $group, $wso2_module) {
     ensure  => file,
     owner   => $owner,
     group   => $group,
-    mode    => '0754',
+    mode    => '0755',
     content => template("${wso2_module}/${name}.erb")
   })
 }

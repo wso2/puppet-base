@@ -55,6 +55,9 @@ wso2::template_list:
 #wso2::file_list:
 #  - repository/conf/security/cipher-tool.properties
 #  - repository/conf/security/cipher-text.properties
+#  - repository/conf/security/secret-conf.properties
+
+#wso2::file_list_copy_without_refresh:
 #  - password-tmp
 
 # JVM settings

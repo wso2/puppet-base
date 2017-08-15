@@ -60,7 +60,8 @@ class wso2base::install {
       group              => $wso2_group,
       install_dir        => $install_dir,
       pack_dir           => $pack_dir,
-      require            => Wso2base::Ensure_directory_structures[$install_dirs]
+      carbon_home        => $carbon_home,
+      notify             => Wso2base::Ensure_directory_structures[$install_dirs]
   }
 
   # download wso2 product pack zip archive
@@ -84,7 +85,7 @@ class wso2base::install {
         ensure         => present,
         owner          => $wso2_user,
         group          => $wso2_group,
-        mode           => 750,
+        mode           => 755,
         source         => [
           "puppet:///modules/${caller_module_name}/${pack_filename}",
           "puppet:///files/packs/${pack_filename}"
@@ -102,7 +103,7 @@ class wso2base::install {
   ensure_resource('exec', "extract_${pack_file_abs_path}", {
     path               => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     cwd                => $install_dir,
-    command            => "unzip ${pack_file_abs_path}",
+    command            => "unzip -u ${pack_file_abs_path}",
     logoutput          => 'on_failure',
     creates            => "${carbon_home}/bin",
     timeout            => 0,
@@ -126,7 +127,7 @@ class wso2base::install {
   ensure_resource('exec', "set_permissions_${carbon_home}", {
     path               => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     cwd                => $carbon_home,
-    command            => "chmod -R 754 ${install_dir}",
+    command            => "chmod -R 755 ${install_dir}",
     logoutput          => 'on_failure',
     timeout            => 0,
     refreshonly        => true

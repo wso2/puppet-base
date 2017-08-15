@@ -21,6 +21,17 @@ class wso2base::service {
   $install_dir       = $wso2base::install_dir
   $carbon_home       = $wso2base::carbon_home
   $autostart_service = $wso2base::autostart_service
+  $file_list_copy_without_refresh = $wso2base::file_list_copy_without_refresh
+
+  if ($file_list_copy_without_refresh != undef and size($file_list_copy_without_refresh) > 0) {
+    wso2base::push_files {
+      $file_list_copy_without_refresh:
+        owner       => $wso2_user,
+        group       => $wso2_group,
+        carbon_home => $carbon_home,
+        wso2_module => $caller_module_name
+    }
+  }
 
   # Start the service
   # TODO: start the service only if configuration changes are applied that needs a restart to be effective
