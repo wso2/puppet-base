@@ -46,7 +46,7 @@ JAVA_HOME="<%= @java_home %>"
 CARBON_HOME="<%= @carbon_home %>"
 LOCK_FILE="${CARBON_HOME}/wso2carbon.lck"
 PID_FILE="${CARBON_HOME}/wso2carbon.pid"
-CMD="${CARBON_HOME}/bin/wso2server.sh"
+CMD="${CARBON_HOME}/bin/<%= @startup_script_name %>"
 
 SERVICE_RUNNING=0
 SERVICE_STOPPED=3
