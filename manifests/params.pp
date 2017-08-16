@@ -19,6 +19,10 @@ class wso2base::params {
   # use_hieradata facter flags whether parameter lookup should be done via Hiera
   if $::use_hieradata == 'true' {
 
+    # server startup script name
+    $startup_script_name      = hiera('wso2::startup_script_name')
+    # process id file path
+    $pid_file_path            = hiera('wso2::pid_file_path')
     # whether we automatically start wso2service or not
     $autostart_service        = hiera('wso2::autostart_service')
     # java properties
@@ -31,9 +35,9 @@ class wso2base::params {
   } else {
 
     # whether we automatically start wso2service or not
-    $autostart_service        = 'true'
+    $autostart_service        = true
     # java properties
-    $install_java             = 'true'
+    $install_java             = true
     $java_install_dir         = '/mnt/jdk-8u131'
     $java_source_file         = 'jdk-8u131-linux-x64.tar.gz'
     $java_user                = 'wso2user'

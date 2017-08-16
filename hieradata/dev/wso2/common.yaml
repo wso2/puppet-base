@@ -33,8 +33,14 @@ wso2::hosts_mapping:
 wso2::ipaddress: "%{::ipaddress}"
 wso2::fqdn: "%{::fqdn}"
 
-# System service name
+# System service template
 wso2::service_template: wso2base/wso2service.erb
+
+# Server startup script name
+wso2::startup_script_name: wso2server.sh
+
+# Process id file path
+wso2::pid_file_path: wso2carbon.pid
 
 # Start WSO2 Server Service automatically
 wso2::autostart_service: true
