@@ -14,7 +14,7 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
+# TODO: Clean will be removed from the next major version release of wso2base puppet module
+# This file is only kept to support backward compatibility
 class wso2base::clean {
-  # TODO: clean is not required and is to be removed from the upcoming versions of puppet modules
-  # This file is only kept to support backward compatibility
 }

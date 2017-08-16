@@ -10,6 +10,10 @@ On high level it includes following:
 - Apply configuration data
 - Start WSO2 server as a service or in foreground
 
+#### System Service Re-starts
+
+The system service will only restart for distribution changes or configuration changes.
+
 ## Supported Operating Systems
 
 - Debian 6 or higher
