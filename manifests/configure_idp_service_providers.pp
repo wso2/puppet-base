@@ -22,7 +22,7 @@ define wso2base::configure_idp_service_providers($carbon_home, $owner, $group, $
     ensure  => file,
     owner   => $owner,
     group   => $group,
-    mode    => '0754',
+    mode    => '0755',
     content => template("${wso2_module}/${template_path}/service_provider_template.xml.erb")
   })
 }

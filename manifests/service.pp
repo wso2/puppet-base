@@ -21,15 +21,26 @@ class wso2base::service {
   $install_dir       = $wso2base::install_dir
   $carbon_home       = $wso2base::carbon_home
   $autostart_service = $wso2base::autostart_service
+  $service_refresh_file_list = $wso2base::service_refresh_file_list
+
+  if ($service_refresh_file_list != undef and size($service_refresh_file_list) > 0) {
+    wso2base::push_files {
+      $service_refresh_file_list:
+        owner       => $wso2_user,
+        group       => $wso2_group,
+        carbon_home => $carbon_home,
+        wso2_module => $caller_module_name
+    }
+  }
 
   # Start the service
-  # TODO: start the service only if configuration changes are applied that needs a restart to be effective
   if ($vm_type != 'docker') and ($autostart_service) {
     service { $service_name:
       ensure     => running,
       hasstatus  => true,
       hasrestart => true,
-      enable     => true
+      enable     => true,
+      require    => Wso2base::Push_files[$service_refresh_file_list]
     }
 
     notify { "Successfully started WSO2 service [name] ${service_name}, [CARBON_HOME] ${carbon_home}":

@@ -48,7 +48,7 @@ class wso2base::configure {
       owner   => $wso2_user,
       group   => $wso2_group,
       recurse => remote,
-      mode    => '0754',
+      mode    => '0755',
       source  => ["puppet:///modules/${caller_module_name}/patches/${platform_version}"]
     })
   }

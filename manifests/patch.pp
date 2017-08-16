@@ -22,7 +22,7 @@ define wso2base::patch ($carbon_home, $patches_dir, $platform_version, $owner, $
       owner   => $owner,
       group   => $group,
       recurse => remote,
-      mode    => '0754',
+      mode    => '0755',
       source  => [
         "puppet:///modules/${wso2_module}/patches/${platform_version}/${name}",
         "puppet:///modules/wso2base/patches/${platform_version}/${name}",

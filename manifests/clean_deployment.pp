@@ -21,17 +21,19 @@ define wso2base::clean_deployment ($pack_file_abs_path, $caller_module_name, $pa
 
     # download the current pack exists in the puppet master to temporary location
     file { "${temp_pack_file_abs_path}":
-        ensure         => file,
+        ensure         => present,
         source         => ["puppet:///modules/${caller_module_name}/${pack_filename}", "puppet:///files/packs/${pack_filename}"],
         replace        => true,
         notify         => Exec['check_diff']
     }
 
-    # if there is a difference between the current pack and the new pack, remove the current pack and the deploymentn
+    # if there is a difference between the current pack and the new pack, remove the current pack and the deployment
     exec { 'check_diff':
-        command        => "rm -rf ${install_dir}/* ${pack_dir}/*",
+        provider       => shell,
+        command        => "if [ -f `${carbon_home}/wso2carbon.pid`]; then kill -9 `cat ${carbon_home}/wso2carbon.pid`; fi && wait && rm -rf ${pack_dir}/* ${carbon_home}",
         path           => ['/usr/bin', '/usr/sbin', '/bin'],
         onlyif         => "test `diff -q ${pack_file_abs_path} ${temp_pack_file_abs_path} >/dev/null; echo $?` -eq 1",
+        refreshonly    => true,
         notify         => Exec['clean_temp_pack']
     }
 
@@ -39,6 +41,7 @@ define wso2base::clean_deployment ($pack_file_abs_path, $caller_module_name, $pa
     exec { 'clean_temp_pack':
         command        => "rm ${temp_pack_file_abs_path}",
         path           => ['/usr/bin', '/usr/sbin', '/bin'],
-        onlyif         => "test -f ${temp_pack_file_abs_path}"
+        onlyif         => "test -f ${temp_pack_file_abs_path}",
+        refreshonly    => true
     }
 }
