@@ -47,7 +47,6 @@ class wso2base::system {
 
   user { $wso2_user:
     ensure     => present,
-    password   => $wso2_user,
     gid        => $wso2_group,
     managehome => true,
     shell      => '/bin/bash',
