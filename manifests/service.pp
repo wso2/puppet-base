@@ -39,8 +39,7 @@ class wso2base::service {
       ensure     => running,
       hasstatus  => true,
       hasrestart => true,
-      enable     => true,
-      require    => Wso2base::Push_files[$service_refresh_file_list]
+      enable     => true
     }
 
     notify { "Successfully started WSO2 service [name] ${service_name}, [CARBON_HOME] ${carbon_home}":
