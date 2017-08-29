@@ -59,9 +59,7 @@ class wso2base::install {
       user               => $wso2_user,
       group              => $wso2_group,
       install_dir        => $install_dir,
-      pack_dir           => $pack_dir,
-      carbon_home        => $carbon_home,
-      notify             => Wso2base::Ensure_directory_structures[$install_dirs]
+      pack_dir           => $pack_dir
   }
 
   # download wso2 product pack zip archive
@@ -90,7 +88,7 @@ class wso2base::install {
           "puppet:///modules/${caller_module_name}/${pack_filename}",
           "puppet:///files/packs/${pack_filename}"
         ],
-        require        => Wso2base::Clean_deployment['clean_on_pack_change'],
+        require        => [Wso2base::Clean_deployment['clean_on_pack_change'], Wso2base::Ensure_directory_structures[$install_dirs]],
         notify         => Exec["extract_${pack_file_abs_path}"],
         replace        => true
       }
