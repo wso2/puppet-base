@@ -70,6 +70,16 @@ class wso2base::system {
       content => template($service_template),
       require => [Group[$wso2_group], User[$wso2_user]]
     }
+
+    if ($osfamily == 'RedHat') and ($operatingsystemmajrelease >= 7) {
+     file { "/etc/systemd/system/${service_name}.service":
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => '0644',
+      content => template(wso2base/wso2unit.erb)
+      }
+    }
   }
 
   # Install JDK only if install_java is set to true

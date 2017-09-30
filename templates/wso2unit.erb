@@ -1,0 +1,16 @@
+[Unit]
+Description=<%= @service_name %> Server
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=<%= @carbon_home %>/bin/wso2server.sh start
+ExecStop=<%= @carbon_home %>/bin/wso2server.sh stop
+PIDFile=<%= @carbon_home %>/bin/wso2carbon.pid
+User=<%= @wso2_user %>
+RemainAfterExit=yes
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
