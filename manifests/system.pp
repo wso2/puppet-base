@@ -77,7 +77,7 @@ class wso2base::system {
       owner   => root,
       group   => root,
       mode    => '0644',
-      content => template(wso2base/wso2unit.erb)
+      content => template('wso2base/wso2unit.erb')
       }
     }
   }
